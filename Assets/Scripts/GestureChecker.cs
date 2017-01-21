@@ -8,7 +8,7 @@ public class GestureChecker : MonoBehaviour {
     Pose maintainedPose = Pose.Neutral;
     Pose currentPose = Pose.Neutral;
     float poseTimer;
-    float requiredHeldTime;
+    float requiredHeldTime = 0.2f;
 
 	// Update is called once per frame
 	void Update () {
