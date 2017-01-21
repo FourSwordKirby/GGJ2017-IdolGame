@@ -29,9 +29,6 @@ public class TwinStickVisualizer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        Debug.Log("" + TwinStickControls.getLeftDirection() + " " + TwinStickControls.getRightDirection());
-
         Rect leftRect = LeftPanel.rect;
         Vector2 leftDir = TwinStickControls.getLeftDirection();
         LStickIcon.anchoredPosition =
