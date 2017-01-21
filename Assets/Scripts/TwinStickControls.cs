@@ -84,6 +84,7 @@ public class TwinStickControls : Controls{
         rightPositions.RemoveAll(x => true);
     }
 
+    //Motion is a single tap up on the right stick
     override public bool CompletedArmPumps()
     {
         int lastIndex = rightPositions.Count - 1;
@@ -114,15 +115,55 @@ public class TwinStickControls : Controls{
         return false;
     }
 
+    //Motion is a synchronized upper half-circles on both sticks
     override public bool CompletedSlowWave()
     {
-        List<Vector2> rightWavePositions;
-        List<Vector2> leftWavePositions;
-        return false;
+        List<Vector2> rightWavePositions = new List<Vector2>() {Vector2.right,
+                                                                Vector2.right + Vector2.up,
+                                                                Vector2.up,
+                                                                Vector2.left + Vector2.up,
+                                                                Vector2.left};
+        List<Vector2> leftWavePositions = new List<Vector2>() {Vector2.left,
+                                                                Vector2.left + Vector2.up,
+                                                                Vector2.up,
+                                                                Vector2.right + Vector2.up,
+                                                                Vector2.right};
+
+        return ((motionDetected(rightWavePositions, leftPositions, 0.2f, 0.5f) && motionDetected(rightWavePositions, rightPositions, 0.2f, 0.5f))
+                || (motionDetected(leftWavePositions, leftPositions, 0.2f, 0.5f) && motionDetected(leftWavePositions, rightPositions, 0.2f, 0.5f)));
     }
 
+    //Motion is hold down on both sticks and then flick up
     override public bool CompletedCrowdWave()
     {
-        return false;
+        List<Vector2> crowdWavePositions = new List<Vector2>() {Vector2.down,
+                                                                Vector2.down,
+                                                                Vector2.up};
+
+        return (motionDetected(crowdWavePositions, leftPositions, 0.3f, 0.5f) && motionDetected(crowdWavePositions, rightPositions, 0.3f, 0.5f));
+    }
+
+    bool motionDetected(List<Vector2> motion, List<KeyValuePair<Vector2, float>> handPositions, float lowerBound, float upperBound)
+    {
+        int lastIndex = handPositions.Count - 1;
+        if (lastIndex == -1)
+            return false;
+
+        for (int i = 0; i < motion.Count - 1; i++)
+        {
+            Vector2 position = motion[i];
+            if (handPositions[lastIndex].Key != position)
+                return false;
+
+            int nextIndex = handPositions.GetRange(0, lastIndex).FindLastIndex(x => x.Key == motion[i + 1]);
+
+            if (nextIndex == -1)
+                return false;
+
+            float delay = handPositions[lastIndex].Value - handPositions[nextIndex].Value;
+            if (!(delay > lowerBound && delay < upperBound))
+                return false;
+        }
+        return true;
     }
 }
