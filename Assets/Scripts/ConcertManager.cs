@@ -5,6 +5,8 @@ using UnityEngine;
 public class ConcertManager : MonoBehaviour {
     // UI Graphic to display for each gesture.
     // Populate in-Editor with prefabs.
+    public static ConcertManager instance;
+
     public List<RectTransform> GestureDisplays = new List<RectTransform>();
 
     public BeatMapLevel currentLevel = new DummyLevel();
@@ -17,6 +19,8 @@ public class ConcertManager : MonoBehaviour {
 
     public float gameTime = 0.0f;
     public float songTime = 0.0f;
+    private float score;
+    private float multiplier;
 
     void Awake()
     {
@@ -28,6 +32,8 @@ public class ConcertManager : MonoBehaviour {
 
     void Start()
     {
+        instance = this;
+
         AudioSource audio = Camera.main.GetComponent<AudioSource>();
         Debug.Log(audio);
         Debug.Log(currentLevel.GetSong());
@@ -62,12 +68,46 @@ public class ConcertManager : MonoBehaviour {
 
     public void PerformGesture(Gesture g)
     {
-        throw new System.NotImplementedException();
+        if (currentEvent.GetEventType() == EventType.GESTURE_TYPE)
+        {
+            GestureBeatMapEvent gestureEvent = currentEvent as GestureBeatMapEvent;
+
+            if(g == gestureEvent.gesture)
+            {
+                //Special case if its a CrowdWave Gesture
+                if (gestureEvent.gesture == Gesture.CrowdWave)
+                {
+                    if (currentEventTime > gestureEvent.eventLength * 0.4f && currentEventTime > gestureEvent.eventLength * 0.6f)
+                        gestureEvent.LogGesture();
+                }
+                else
+                    gestureEvent.LogGesture();
+            }
+
+            //Add the score if the gesture is complete
+            if(gestureEvent.EventFullfilled())
+            {
+                score += gestureEvent.GetReward() * multiplier;
+            }
+        }
     }
 
-    public void PerformPose(int ImplementMePlease)
+    public void PerformPose(Pose p)
     {
-        throw new System.NotImplementedException();
+        if (currentEvent.GetEventType() == EventType.POSE_TYPE)
+        {
+            PoseBeatMapEvent poseEvent = currentEvent as PoseBeatMapEvent;
+
+            if (p == poseEvent.CurrentPose())
+            {
+                poseEvent.LogPose();
+            }
+
+            if(poseEvent.EventFullfilled())
+            {
+                multiplier += poseEvent.GetMultiplier();
+            }
+        }
     }
 
     public RectTransform GetPromptDisplay()

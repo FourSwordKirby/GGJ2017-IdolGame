@@ -17,18 +17,6 @@ public class Parameters : MonoBehaviour
         Neutral
     };
 
-    public enum Gestures
-    {
-        ArmPumps,
-        SlowWave,
-        CrowdWave
-    }
-
-    public enum Poses
-    {
-        KillerQueen
-    }
-
     public static ControllerDirection vectorToDirection(Vector2 inputVector)
     {
         if (inputVector == Vector2.zero)

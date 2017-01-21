@@ -11,8 +11,14 @@ public enum EventType
 
 public enum Gesture
 {
-    TEMPORARY_GESTURE_PLACEHOLDER_ENUM,
-    TEMPORARY_GESTURE_PLACEHOLDER_ENUM2,
+    ArmPumps,
+    SlowWave,
+    CrowdWave
+}
+
+public enum Pose
+{
+    KillerQueen
 }
 
 public abstract class BeatMapEvent
@@ -24,17 +30,9 @@ public abstract class BeatMapEvent
         this.eventLength = eventLength;
     }
 
-    public virtual bool eventFullfilled()
-    {
-        return false;
-    }
+    public abstract bool EventFullfilled();
 
     public abstract EventType GetEventType();
-
-    public virtual float GetReward()
-    {
-        return 0.0f;
-    }
 
     public virtual RectTransform GetDisplay()
     {
@@ -45,10 +43,15 @@ public abstract class BeatMapEvent
 public class GestureBeatMapEvent : BeatMapEvent
 {
     public Gesture gesture;
+    public int gestureCount;
+    public int loggedGestures;
 
-    public GestureBeatMapEvent(float time, Gesture gesture) : base(time)
+    public GestureBeatMapEvent(float eventLength, Gesture gesture, int gestureCount) : base(eventLength)
     {
         this.gesture = gesture;
+        //You can only do 
+        if (this.gesture == Gesture.CrowdWave)
+            this.gestureCount = 1;
     }
 
     public override EventType GetEventType()
@@ -56,34 +59,80 @@ public class GestureBeatMapEvent : BeatMapEvent
         return EventType.GESTURE_TYPE;
     }
 
-    //TODO: Implement
-    public override bool eventFullfilled()
+    public override bool EventFullfilled()
     {
-        return base.eventFullfilled();
+        return loggedGestures >= gestureCount;
     }
 
     public override RectTransform GetDisplay()
     {
         return base.GetDisplay();
     }
+
+    public void LogGesture()
+    {
+        loggedGestures++;
+    }
+
+    public float GetReward()
+    {
+        switch(gesture)
+        {
+            case Gesture.ArmPumps:
+                return 100;
+            case Gesture.SlowWave:
+                return 500;
+            case Gesture.CrowdWave:
+                return 1000;
+            default:
+                return 0;
+        }
+    }
 }
 
 //TODO: Implement
 public class PoseBeatMapEvent : BeatMapEvent
 {
-    public PoseBeatMapEvent(float time) : base(time)
-    {
+    public List<Pose> requiredPoses;
+    public int loggedPoses;
 
-    }
-
-    public override bool eventFullfilled()
+    public PoseBeatMapEvent(float eventLength, List<Pose> poses) : base(eventLength)
     {
-        return base.eventFullfilled();
+        requiredPoses = poses;
     }
 
     public override EventType GetEventType()
     {
         return EventType.POSE_TYPE;
+    }
+
+    public override bool EventFullfilled()
+    {
+        return false;
+    }
+
+    public override RectTransform GetDisplay()
+    {
+        return base.GetDisplay();
+    }
+
+    public Pose CurrentPose()
+    {
+        return requiredPoses[0];
+    }
+
+    public void LogPose()
+    {
+        loggedPoses++;
+        if(requiredPoses.Count > 0)
+        {
+            requiredPoses.RemoveAt(0);
+        }
+    }
+
+    public float GetMultiplier()
+    {
+        return 0.2f * loggedPoses;
     }
 }
 
