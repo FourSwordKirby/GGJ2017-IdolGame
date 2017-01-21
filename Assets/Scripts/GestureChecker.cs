@@ -5,6 +5,11 @@ public class GestureChecker : MonoBehaviour {
 
     public TwinStickControls twinStickControls;
 
+    Pose maintainedPose = Pose.Neutral;
+    Pose currentPose = Pose.Neutral;
+    float poseTimer;
+    float requiredHeldTime = 0.2f;
+
 	// Update is called once per frame
 	void Update () {
         //print("left" + TwinStickControls.getLeftDirection());
@@ -24,6 +29,26 @@ public class GestureChecker : MonoBehaviour {
             resetChecker();
             ConcertManager.instance.PerformGesture(Gesture.SlowWave);
         }
+
+        if (twinStickControls.RetrievePose() == Pose.Neutral)
+        {
+            maintainedPose = Pose.Neutral;
+            poseTimer = 0.0f;
+        }
+        else if(currentPose != twinStickControls.RetrievePose())
+        {
+            poseTimer = 0.0f;
+        }
+        else if(maintainedPose != currentPose)
+        {
+            poseTimer += Time.deltaTime;
+            if(poseTimer > requiredHeldTime)
+            {
+                maintainedPose = twinStickControls.RetrievePose();
+                ConcertManager.instance.PerformPose(maintainedPose);
+            }
+        }
+        currentPose = twinStickControls.RetrievePose();
     }
 
     void resetChecker()

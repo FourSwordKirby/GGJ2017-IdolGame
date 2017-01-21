@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class TwinStickControls : Controls{
     /*These constants refer to specific thresholds for reading in inputs
@@ -139,6 +140,17 @@ public class TwinStickControls : Controls{
                                                                                        Parameters.ControllerDirection.N };
 
         return (motionDetected(crowdWavePositions, leftPositions, .5f, 5.0f) && motionDetected(crowdWavePositions, rightPositions, .5f, 5.0f));
+    }
+
+
+    override public Pose RetrievePose()
+    {
+        Parameters.ControllerDirection leftStickDir = Parameters.vectorToDirection(getLeftDirection());
+        Parameters.ControllerDirection rightStickDir = Parameters.vectorToDirection(getRightDirection());
+        if ((leftStickDir == Parameters.ControllerDirection.N && rightStickDir == Parameters.ControllerDirection.S)
+            || (leftStickDir == Parameters.ControllerDirection.S && rightStickDir == Parameters.ControllerDirection.N))
+            return Pose.KillerQueen;
+        return Pose.Neutral;
     }
 
     bool motionDetected(List<Parameters.ControllerDirection> motion, List<KeyValuePair<Parameters.ControllerDirection, float>> handPositions, float lowerBound, float upperBound)

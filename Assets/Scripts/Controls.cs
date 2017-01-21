@@ -10,4 +10,6 @@ public abstract class Controls:MonoBehaviour {
     public abstract bool CompletedSlowWave();
 
     public abstract bool CompletedCrowdWave();
+
+    public abstract Pose RetrievePose();
 }
