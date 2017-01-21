@@ -111,7 +111,7 @@ public class PoseBeatMapEvent : BeatMapEvent
 
     public override bool EventFullfilled()
     {
-        return false;
+        return requiredPoses.Count == 0;
     }
 
     public override RectTransform GetDisplay()
@@ -121,6 +121,10 @@ public class PoseBeatMapEvent : BeatMapEvent
 
     public Pose CurrentPose()
     {
+        if(requiredPoses.Count == 0)
+        {
+            return Pose.Neutral;
+        }
         return requiredPoses[0];
     }
 

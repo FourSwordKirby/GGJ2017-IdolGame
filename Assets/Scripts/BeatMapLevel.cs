@@ -19,6 +19,7 @@ public class DummyLevel : BeatMapLevel
     // The Level
     private BeatMapEvent[] beatMap =
     {
+        new PoseBeatMapEvent(5, new List<Pose>(){Pose.KillerQueen}),
         new GestureBeatMapEvent(5.6f, Gesture.ArmPumps, 1),
         new GestureBeatMapEvent(5.6f, Gesture.SlowWave, 1),
         new GestureBeatMapEvent(5.6f, Gesture.ArmPumps, 1),
@@ -42,6 +43,6 @@ public class DummyLevel : BeatMapLevel
 
     public override float GetDelayTillFirstEvent()
     {
-        return 12.8f;
+        return 2.0f;
     }
 }

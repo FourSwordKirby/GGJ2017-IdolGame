@@ -5,6 +5,7 @@ using UnityEngine;
 public class RewardUI : MonoBehaviour {
 
     public Animator anim;
+    public GameObject Sugoi;
 
     void Awake()
     {
@@ -24,5 +25,13 @@ public class RewardUI : MonoBehaviour {
     public void Reward()
     {
         anim.SetTrigger("Reward");
+    }
+
+    public void Advance()
+    {
+        Transform t = Camera.main.transform;
+        GameObject g = Instantiate(Sugoi, t, false);
+        g.transform.position += g.transform.forward * 2.0f;
+        g.transform.position += g.transform.right * -1.0f;
     }
 }

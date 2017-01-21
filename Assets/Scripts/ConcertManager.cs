@@ -8,6 +8,7 @@ public class ConcertManager : MonoBehaviour {
     public static ConcertManager instance;
 
     public List<RectTransform> GestureDisplays = new List<RectTransform>();
+    public List<RectTransform> PoseDisplays = new List<RectTransform>();
 
     public BeatMapLevel currentLevel = new DummyLevel();
     private int eventIndex;
@@ -23,6 +24,11 @@ public class ConcertManager : MonoBehaviour {
     public float multiplier;
 
     public RewardUI reward;
+
+    public GameObject CameraPositions;
+    public Transform targetCameraTransform;
+
+    public int cameraLevel;
 
     void Awake()
     {
@@ -43,10 +49,33 @@ public class ConcertManager : MonoBehaviour {
         audio.PlayDelayed(DELAY_TILL_SONG_START);
 
         reward = GameObject.FindObjectOfType<RewardUI>();
+
+        SetCameraLevel(0, true);
+
+    }
+
+    public void SetCameraLevel(int level, bool instant)
+    {
+        targetCameraTransform = CameraPositions.transform.GetChild(level).transform;
+        Debug.Log(targetCameraTransform.position);
+        if(instant)
+        {
+            Camera.main.transform.position = targetCameraTransform.position;
+            Camera.main.transform.rotation = targetCameraTransform.rotation;
+        }
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("Q pressed.");
+            AdvancePlayer();
+        }
+
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetCameraTransform.position, .02f);
+        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetCameraTransform.rotation, .02f);
+
         gameTime += Time.deltaTime;
         if(gameTime > DELAY_TILL_SONG_START)
         {
@@ -71,6 +100,7 @@ public class ConcertManager : MonoBehaviour {
             currentEventTime = 0.0f;
             nextEventTime = currentEvent.eventLength;
         }
+
     }
 
     public void PerformGesture(Gesture g)
@@ -126,6 +156,7 @@ public class ConcertManager : MonoBehaviour {
             if(poseEvent.EventFullfilled())
             {
                 multiplier += poseEvent.GetMultiplier();
+                AdvancePlayer();
             }
         }
     }
@@ -142,6 +173,13 @@ public class ConcertManager : MonoBehaviour {
             GestureBeatMapEvent e = currentEvent as GestureBeatMapEvent;
             return GestureDisplays[(int)e.gesture];
         }
+
+        if (currentEvent.GetEventType() == EventType.POSE_TYPE)
+        {
+            PoseBeatMapEvent p = currentEvent as PoseBeatMapEvent;
+            Debug.Log((int)p.CurrentPose());
+            return PoseDisplays[(int)p.CurrentPose()];
+        }
         return null;
     }
 
@@ -155,6 +193,17 @@ public class ConcertManager : MonoBehaviour {
         if(reward)
         {
             reward.Reward();
+        }
+    }
+
+    public void AdvancePlayer()
+    {
+        cameraLevel++;
+        SetCameraLevel(cameraLevel, false);
+
+        if(reward)
+        {
+            reward.Advance();
         }
     }
 }
