@@ -27,7 +27,7 @@ public class GestureChecker : MonoBehaviour {
         if (twinStickControls.CompletedCrowdWave() || Input.GetKeyDown(KeyCode.C))
         {
             resetChecker();
-            ConcertManager.instance.PerformGesture(Gesture.SlowWave);
+            ConcertManager.instance.PerformGesture(Gesture.CrowdWave);
         }
 
         if (twinStickControls.RetrievePose() == Pose.Neutral)

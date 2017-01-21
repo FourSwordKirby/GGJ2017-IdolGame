@@ -124,15 +124,18 @@ public class ConcertManager : MonoBehaviour {
                         gestureEvent.LogGesture();
                 }
                 else
+                {
                     gestureEvent.LogGesture();
+                }
+
+                //Add the score if the gesture is complete
+                if (gestureEvent.EventFullfilled())
+                {
+                    score += gestureEvent.GetReward() * multiplier;
+                    BroadcastReward();
+                }
             }
 
-            //Add the score if the gesture is complete
-            if(gestureEvent.EventFullfilled())
-            {
-                score += gestureEvent.GetReward() * multiplier;
-                BroadcastReward();
-            }
         }
     }
 
@@ -151,13 +154,13 @@ public class ConcertManager : MonoBehaviour {
             if (p == poseEvent.CurrentPose())
             {
                 poseEvent.LogPose();
+                if (poseEvent.EventFullfilled())
+                {
+                    multiplier += poseEvent.GetMultiplier();
+                    AdvancePlayer();
+                }
             }
 
-            if(poseEvent.EventFullfilled())
-            {
-                multiplier += poseEvent.GetMultiplier();
-                AdvancePlayer();
-            }
         }
     }
 
