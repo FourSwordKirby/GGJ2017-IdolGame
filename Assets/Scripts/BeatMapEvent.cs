@@ -52,6 +52,8 @@ public class GestureBeatMapEvent : BeatMapEvent
         //You can only do 
         if (this.gesture == Gesture.CrowdWave)
             this.gestureCount = 1;
+        else
+            this.gestureCount = gestureCount;
     }
 
     public override EventType GetEventType()

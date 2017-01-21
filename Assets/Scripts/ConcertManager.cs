@@ -15,15 +15,19 @@ public class ConcertManager : MonoBehaviour {
     public float currentEventTime;
     private BeatMapEvent currentEvent;
 
-    private float DELAY_TILL_SONG_START = 3.0f;
+    private float DELAY_TILL_SONG_START = 1.0f;
 
     public float gameTime = 0.0f;
     public float songTime = 0.0f;
-    private float score;
-    private float multiplier;
+    public float score;
+    public float multiplier;
+
+    public RewardUI reward;
 
     void Awake()
     {
+        score = 0f;
+        multiplier = 1;
         eventIndex = 0;
         currentEvent = currentLevel.GetEventAtIndex(eventIndex);
         currentEventTime = 0.0f;
@@ -35,11 +39,10 @@ public class ConcertManager : MonoBehaviour {
         instance = this;
 
         AudioSource audio = Camera.main.GetComponent<AudioSource>();
-        Debug.Log(audio);
-        Debug.Log(currentLevel.GetSong());
         audio.clip = currentLevel.GetSong();
         audio.PlayDelayed(DELAY_TILL_SONG_START);
-        Debug.Log(audio);
+
+        reward = GameObject.FindObjectOfType<RewardUI>();
     }
 
     void Update()
@@ -52,6 +55,10 @@ public class ConcertManager : MonoBehaviour {
         if (gameTime > DELAY_TILL_SONG_START + currentLevel.GetDelayTillFirstEvent())
         {
             currentEventTime += Time.deltaTime;
+        }
+        else
+        {
+            return;
         }
 
         float t = currentEventTime;
@@ -68,6 +75,12 @@ public class ConcertManager : MonoBehaviour {
 
     public void PerformGesture(Gesture g)
     {
+        if (gameTime < DELAY_TILL_SONG_START + currentLevel.GetDelayTillFirstEvent())
+        {
+            return;
+        }
+
+
         if (currentEvent.GetEventType() == EventType.GESTURE_TYPE)
         {
             GestureBeatMapEvent gestureEvent = currentEvent as GestureBeatMapEvent;
@@ -88,12 +101,19 @@ public class ConcertManager : MonoBehaviour {
             if(gestureEvent.EventFullfilled())
             {
                 score += gestureEvent.GetReward() * multiplier;
+                BroadcastReward();
             }
         }
     }
 
     public void PerformPose(Pose p)
     {
+        if (gameTime < DELAY_TILL_SONG_START + currentLevel.GetDelayTillFirstEvent())
+        {
+            return;
+        }
+
+
         if (currentEvent.GetEventType() == EventType.POSE_TYPE)
         {
             PoseBeatMapEvent poseEvent = currentEvent as PoseBeatMapEvent;
@@ -128,5 +148,13 @@ public class ConcertManager : MonoBehaviour {
     public float GetTimeTillFirstEvent()
     {
         return DELAY_TILL_SONG_START + currentLevel.GetDelayTillFirstEvent() - gameTime;
+    }
+
+    public void BroadcastReward()
+    {
+        if(reward)
+        {
+            reward.Reward();
+        }
     }
 }

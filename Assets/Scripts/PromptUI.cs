@@ -34,6 +34,8 @@ public class PromptUI : MonoBehaviour {
             manager.songTime,
             manager.currentEventTime);
 
+        timePanel.text += "\nScore: " + manager.score;
+
         if (manager.GetTimeTillFirstEvent() > 0)
         {
             float t = manager.GetTimeTillFirstEvent();
@@ -67,7 +69,6 @@ public class PromptUI : MonoBehaviour {
         }
 
         currentPrompt = prompt;
-        currentPrompt = manager.GetPromptDisplay();
         RectTransform t = Instantiate(currentPrompt, promptPanel) as RectTransform;
 
         t.offsetMax = new Vector2(0.0f, 0.0f);

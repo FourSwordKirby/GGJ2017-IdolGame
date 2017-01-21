@@ -138,7 +138,7 @@ public class TwinStickControls : Controls{
         List<Parameters.ControllerDirection> crowdWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.S,
                                                                                        Parameters.ControllerDirection.N };
 
-        return (motionDetected(crowdWavePositions, leftPositions, 0.3f, 1.0f) && motionDetected(crowdWavePositions, rightPositions, 0.3f, 1.0f));
+        return (motionDetected(crowdWavePositions, leftPositions, .5f, 5.0f) && motionDetected(crowdWavePositions, rightPositions, .5f, 5.0f));
     }
 
     bool motionDetected(List<Parameters.ControllerDirection> motion, List<KeyValuePair<Parameters.ControllerDirection, float>> handPositions, float lowerBound, float upperBound)
