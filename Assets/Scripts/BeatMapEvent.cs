@@ -18,6 +18,7 @@ public enum Gesture
 
 public enum Pose
 {
+    Neutral,
     KillerQueen
 }
 
