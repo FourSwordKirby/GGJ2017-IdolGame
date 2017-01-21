@@ -2,25 +2,27 @@ using UnityEngine;
 using System.Collections;
 using WiimoteApi;
 
-public class NewGestureChecker : MonoBehaviour
+public class WiiMoteController : MonoBehaviour
 {
     public Wiimote ourWiimote;
     public bool connected = false;
     // Update is called once per frame
     void Update()
     {
-        if (!(WiimoteManager.HasWiimote()) || WiimoteManager.Wiimotes.Count != 1 || !(connected)) //How many Wiimotes do we need or want?
+        if (!(WiimoteManager.HasWiimote()) || WiimoteManager.Wiimotes.Count != 2 || !(connected)) //How many Wiimotes do we need or want?
         {
             WiimoteManager.FindWiimotes();
             foreach (Wiimote remote in WiimoteManager.Wiimotes)
             {
                 ourWiimote = remote;
+                print("here");
             }
             connected = true;
         }
         if (connected)
         {
             //ourWiimote.SendStatusInfoRequest(); //For checking battery. I don't think it works though.
+            ourWiimote.SendPlayerLED(true, false, false, false);
             printAccelerometerData();
         }
         else
