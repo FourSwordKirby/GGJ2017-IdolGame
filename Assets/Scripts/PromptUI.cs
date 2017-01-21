@@ -67,7 +67,9 @@ public class PromptUI : MonoBehaviour {
         }
 
         currentPrompt = prompt;
-        RectTransform t = Instantiate<RectTransform>(prompt, promptPanel);
+        currentPrompt = manager.GetPromptDisplay();
+        RectTransform t = Instantiate(currentPrompt, promptPanel) as RectTransform;
+
         t.offsetMax = new Vector2(0.0f, 0.0f);
         t.offsetMin = new Vector2(0.0f, 0.0f);
     }

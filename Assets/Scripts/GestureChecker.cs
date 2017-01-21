@@ -9,12 +9,21 @@ public class GestureChecker : MonoBehaviour {
 	void Update () {
         //print("left" + TwinStickControls.getLeftDirection());
         //print("right" + TwinStickControls.getRightDirection());
-        if (twinStickControls.CompletedArmPumps())
+        if (twinStickControls.CompletedArmPumps() || Input.GetKeyDown(KeyCode.Z))
         {
             resetChecker();
-            print("Arms Pumped");
+            ConcertManager.instance.PerformGesture(Gesture.ArmPumps);
         }
-        //Do a thing wh
+        if (twinStickControls.CompletedSlowWave() || Input.GetKeyDown(KeyCode.X))
+        {
+            resetChecker();
+            ConcertManager.instance.PerformGesture(Gesture.SlowWave);
+        }
+        if (twinStickControls.CompletedCrowdWave() || Input.GetKeyDown(KeyCode.C))
+        {
+            resetChecker();
+            ConcertManager.instance.PerformGesture(Gesture.SlowWave);
+        }
     }
 
     void resetChecker()

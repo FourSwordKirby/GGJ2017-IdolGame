@@ -19,8 +19,10 @@ public class DummyLevel : BeatMapLevel
     // The Level
     private BeatMapEvent[] beatMap =
     {
-        new GestureBeatMapEvent(2, Gesture.TEMPORARY_GESTURE_PLACEHOLDER_ENUM),
-        new GestureBeatMapEvent(2, Gesture.TEMPORARY_GESTURE_PLACEHOLDER_ENUM2)
+        new GestureBeatMapEvent(2, Gesture.ArmPumps, 3),
+        new GestureBeatMapEvent(2, Gesture.SlowWave, 3),
+        new GestureBeatMapEvent(2, Gesture.CrowdWave, 1),
+        new PoseBeatMapEvent(2, new List<Pose>(){Pose.KillerQueen})
     };
 
     public override BeatMapEvent GetEventAtIndex(int i)
