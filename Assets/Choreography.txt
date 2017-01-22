@@ -1,0 +1,26 @@
+0-3.5: Flames only
+3.5-7: Spotlights start flailing
+7-8: Everything stops, pinwheels and spotlights only
+8-16: pinwheels off, Everything else turns on (low intensity, no fireworks)
+16-23: fireworks & pinwheels
+23-28: Global lights kind of dim, only hexagons
+28-30: Fireworks on
+30-35: Fireworks off, fire on, spotlights up, global lights up
+35-37: Fireworks On,
+37-42:Lights kind of dim, only hexagons
+42-44:Turn on pinwheels
+44-52: pinwheels off
+52-54: Everything off 
+54-59: Global Light up slightly, spotlights up
+59-1:01: pinwheels up
+1:01-1:08:pinwheels down, fire up
+1:08-1:10: Everything off 
+1:10-1:16:Lights kind of dim, only hexagons and spotlights
+1:16-1:18: Fireworks on
+1:18-1:23: Fireworks off, fire on, global lights up
+1:23-1:25: Fireworks On, Everything else off
+1:25-1:31: Everything else turns on, but pinwheels
+1:31-1:38: Turn on pinwheels
+1:38-1:43:Lights kind of dim, only hexagons
+1:43-1:45: Fireworks
+1:45-: Just the hexagons
