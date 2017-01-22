@@ -7,6 +7,8 @@ public class ConcertScoreDisplay : MonoBehaviour
 {
     public Text ScoreDisplay;
 
+    public AudioClip successSfx;
+
     public GameObject scoreExplode;
     public GameObject explodeParticles;
 
@@ -23,6 +25,7 @@ public class ConcertScoreDisplay : MonoBehaviour
 
         if(scoreIncrease / multiplier > 1000)
         {
+            AudioSource.PlayClipAtPoint(successSfx, Camera.main.transform.position);
             StartCoroutine(Explode(5 + (int)(10 * (scoreIncrease / multiplier - 1000) / 500)));
             StartCoroutine(Explode2(10));
         }
@@ -30,6 +33,7 @@ public class ConcertScoreDisplay : MonoBehaviour
 
     public void SetMultiplier(float m)
     {
+        AudioSource.PlayClipAtPoint(successSfx, Camera.main.transform.position);
         this.multiplier = m;
         StartCoroutine(ConfirmMultiplier());
     }

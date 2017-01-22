@@ -28,6 +28,7 @@ public class ConcertManager : MonoBehaviour {
     private List<float> accumulatedScores = new List<float>();
 
     public RewardUI reward;
+    public ConcertScoreDisplay scoreDisplay;
 
     public ScreenFader screenFader;
 
@@ -161,6 +162,7 @@ public class ConcertManager : MonoBehaviour {
                 if (gestureEvent.EventFullfilled())
                 {
                     score += gestureEvent.GetReward() * multiplier;
+                    scoreDisplay.SetScore(score);              
                     BroadcastReward();
                 }
             }
@@ -186,6 +188,7 @@ public class ConcertManager : MonoBehaviour {
                 if (poseEvent.EventFullfilled())
                 {
                     multiplier += poseEvent.GetMultiplier();
+                    scoreDisplay.SetMultiplier(multiplier);
                     AdvancePlayer();
                 }
             }

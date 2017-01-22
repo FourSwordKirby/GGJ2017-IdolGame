@@ -193,6 +193,8 @@ public class TwinStickControls : Controls{
         List<Parameters.ControllerDirection> leftWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.W,
                                                                                        Parameters.ControllerDirection.N,
                                                                                        Parameters.ControllerDirection.E };
+        if (rightPositions[rightPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral) ;
+            return false;
 
         return (motionDetected(rightWavePositions, leftPositions, 1.0f) || motionDetected(leftWavePositions, leftPositions, 1.0f));
     }
@@ -207,6 +209,8 @@ public class TwinStickControls : Controls{
         List<Parameters.ControllerDirection> leftWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.W,
                                                                                        Parameters.ControllerDirection.N,
                                                                                        Parameters.ControllerDirection.E };
+        if (leftPositions[leftPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral)
+            return false;
 
         return (motionDetected(rightWavePositions, rightPositions, 1.0f) || motionDetected(leftWavePositions, rightPositions, 1.0f));
     }
