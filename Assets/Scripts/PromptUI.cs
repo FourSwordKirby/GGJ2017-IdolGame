@@ -52,6 +52,7 @@ public class PromptUI : MonoBehaviour {
 
 		if (currentPrompt != manager.GetPromptDisplay())
         {
+            Debug.Log("Prompt change.");
             SpawnPrompt(manager.GetPromptDisplay());
         }
 	}
@@ -60,7 +61,17 @@ public class PromptUI : MonoBehaviour {
     {
         if (promptPanel.childCount != 0)
         {
-            Destroy(promptPanel.GetChild(0).gameObject);
+            GameObject c = promptPanel.GetChild(0).gameObject;
+            GesturePrompt gp = c.GetComponent<GesturePrompt>();
+            if (gp != null)
+            {
+                Debug.Log("Die triggered");
+                gp.Die();
+            }
+            else
+            {
+                Destroy(promptPanel.GetChild(0).gameObject);
+            }
         }
         
         if (!prompt)

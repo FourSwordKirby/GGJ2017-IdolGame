@@ -11,15 +11,15 @@ public enum EventType
 
 public enum Gesture
 {
+    Idle,
     RightArmPumps,
     LeftArmPumps,
     SimultaneousArmPumps,
-    SlowWave,
-    CrowdWave,
-    Clap,
-    LeftWave,
     RightWave,
-    Idle
+    LeftWave,
+    SlowWave,
+    Clap,
+    CrowdWave
 }
 
 public enum Pose
