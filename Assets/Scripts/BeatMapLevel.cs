@@ -24,8 +24,8 @@ public class DummyLevel : BeatMapLevel
         new GestureBeatMapEvent(5.6f, Gesture.SimultaneousArmPumps, 1), //21.6
         new GestureBeatMapEvent(1.278f, Gesture.LeftArmPumps, 1), //22.878
         new GestureBeatMapEvent(6.86f, Gesture.SlowWave, 1), //29.738
-        new GestureBeatMapEvent(5.14f, Gesture.CrowdWave, 1), //34.878
-        new PoseBeatMapEvent(1.720f, new List<Pose>(){Pose.KillerQueen}), //36.598
+        new GestureBeatMapEvent(3.14f, Gesture.CrowdWave, 1), //34.878
+        new PoseBeatMapEvent(3.720f, new List<Pose>(){Pose.KillerQueen}), //36.598
         new GestureBeatMapEvent(10.295f, Gesture.SlowWave, 1), //46.893
         new GestureBeatMapEvent(6.86f, Gesture.Clap, 1), //53.753 //Man clapping to the rhythm would hurt but posing for 7 seconds would be awkward
         new GestureBeatMapEvent(6.86f, Gesture.SlowWave, 1), //60.613
