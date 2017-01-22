@@ -14,11 +14,11 @@ public enum Gesture
     RightArmPumps,
     LeftArmPumps,
     SimultaneousArmPumps,
-    LeftWave,
-    RightWave,
     SlowWave,
     CrowdWave,
     Clap,
+    LeftWave,
+    RightWave,
     Idle
 }
 
