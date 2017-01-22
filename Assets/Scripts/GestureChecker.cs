@@ -17,7 +17,7 @@ public class GestureChecker : MonoBehaviour {
         if (twinStickControls.CompletedArmPumps() || Input.GetKeyDown(KeyCode.Z))
         {
             resetChecker();
-            ConcertManager.instance.PerformGesture(Gesture.ArmPumps);
+            ConcertManager.instance.PerformGesture(Gesture.RightArmPumps);
         }
         if (twinStickControls.CompletedSlowWave() || Input.GetKeyDown(KeyCode.X))
         {
