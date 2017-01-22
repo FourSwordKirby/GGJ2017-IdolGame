@@ -10,6 +10,8 @@ public class StartScreenTransitions : MonoBehaviour {
     public StartMenuController startMenuController;
     public HighScoreController highScoreController;
 
+    public AudioClip buttonClick;
+
     public ScreenFader fader;
     public bool gameStarted;
 
@@ -20,7 +22,9 @@ public class StartScreenTransitions : MonoBehaviour {
 
     public void StartGame()
     {
-        if(!fader.fading)
+        AudioSource.PlayClipAtPoint(buttonClick, Camera.main.transform.position);
+
+        if (!fader.fading)
         {
             StartCoroutine(fader.FadeOut());
             gameStarted = true;
@@ -31,12 +35,16 @@ public class StartScreenTransitions : MonoBehaviour {
     {
         StartCoroutine(startMenuController.Dismiss());
         StartCoroutine(highScoreController.Display());
+
+        AudioSource.PlayClipAtPoint(buttonClick, Camera.main.transform.position);
     }
 
     public void HideHighScores()
     {
         StartCoroutine(startMenuController.Display());
         StartCoroutine(highScoreController.Dismiss());
+
+        AudioSource.PlayClipAtPoint(buttonClick, Camera.main.transform.position);
     }
 
     void Update()

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class NameController : MonoBehaviour {
     public InputField inputField;
+    public AudioClip buttonClick;
 
     // Update is called once per frame
     void Update () {
@@ -17,6 +18,7 @@ public class NameController : MonoBehaviour {
     public void AppendEmoji(string emoji)
     {
         inputField.text += emoji;
+        AudioSource.PlayClipAtPoint(buttonClick, Camera.main.transform.position);
     }
 
     public string GetName()

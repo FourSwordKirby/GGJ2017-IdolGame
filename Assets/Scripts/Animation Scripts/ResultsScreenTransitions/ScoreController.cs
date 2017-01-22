@@ -14,6 +14,8 @@ public class ScoreController : MonoBehaviour {
     float score;
     float targetScore;
 
+    public AudioClip successSfx;
+
     bool exploded;
     
     public void SetScore(float s)
@@ -30,6 +32,8 @@ public class ScoreController : MonoBehaviour {
 
         if (targetScore - score < 1 && !exploded)
         {
+            AudioSource.PlayClipAtPoint(successSfx, Camera.main.transform.position);
+
             exploded = true;
             StartCoroutine(Explode(10));
             StartCoroutine(Explode2(25));
@@ -91,15 +95,15 @@ public class ScoreController : MonoBehaviour {
     {
         float flashTime = 0.1f;
         if (score > 100)
-            RankDisplay.text = "<b>SSS</b>UGOI!!";
+            RankDisplay.text = "<size=100><b>SSS</b></size> UGOI!!";
         else if (score > 80)
-            RankDisplay.text = "<b>SS</b>UGOI!";
+            RankDisplay.text = "<size=100><b>SS</b></size> UGOI!";
         else if (score > 60)
-            RankDisplay.text = "<b>S</b>UGOI";
+            RankDisplay.text = "<size=100><b>S</b></size> UGOI";
         else if (score > 40)
-            RankDisplay.text = "<b>A</b>nime";
+            RankDisplay.text = "<size=100><b>A</b></size>> nime";
         else if (score > 20)
-            RankDisplay.text = "<b>B</b>-b-baka";
+            RankDisplay.text = "<size=100><b>B</b></size> -b-baka";
 
         float timer = 0.0f;
         while (timer  < 3*flashTime)
