@@ -10,6 +10,8 @@ public class ResultsScreenTransitions : MonoBehaviour {
     public static float score = 120;
     public static List<float> accumulatedScores = new List<float>() { 5.0f, 15.0f, 30.0f, 50.0f, 100.0f, 120.0f};
 
+    public AudioClip buttonClick;
+
     public ScoreController scoreController;
     public ScoreChart scoreChart;
     public NameController nameController;
@@ -28,6 +30,7 @@ public class ResultsScreenTransitions : MonoBehaviour {
 
     public void BackToTitle()
     {
+        AudioSource.PlayClipAtPoint(buttonClick, Camera.main.transform.position);
         if (!fader.fading)
         {
             StartCoroutine(fader.FadeOut());
@@ -52,6 +55,8 @@ public class ResultsScreenTransitions : MonoBehaviour {
         //Remove the submit button etc.
         StartCoroutine(nameController.Dismiss());
         StartCoroutine(highScoreController.Display());
+
+        AudioSource.PlayClipAtPoint(buttonClick, Camera.main.transform.position);
     }
 
     void Update()
