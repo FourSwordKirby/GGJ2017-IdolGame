@@ -17,6 +17,7 @@ public class PromptUI : MonoBehaviour {
 
     public BeatMapEvent currentEvent;
     public GesturePrompt gesturePrompt;
+    public GesturePrompt posePrompt;
     public RectTransform currentTransform;
 
 	// Use this for initialization
@@ -64,6 +65,11 @@ public class PromptUI : MonoBehaviour {
             {
                 GestureBeatMapEvent gbme = currentEvent as GestureBeatMapEvent;
                 SpawnPrompt(gesturePrompt.GetComponent<RectTransform>(), (int)gbme.gesture);
+            }
+            else if (currentEvent is PoseBeatMapEvent)
+            {
+                PoseBeatMapEvent pbme = currentEvent as PoseBeatMapEvent;
+                SpawnPrompt(posePrompt.GetComponent<RectTransform>(), (int)pbme.CurrentPose());
             }
             else
             {
