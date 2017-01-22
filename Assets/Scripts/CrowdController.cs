@@ -13,6 +13,14 @@ public class CrowdController : MonoBehaviour {
 
     private void Awake()
     {
+        List<Vector3> SpawnPositions = new List<Vector3>()
+        {
+            new Vector3(0, 1.165417f, -40.51f),
+            new Vector3(5.03f, 1.165417f, -32.49f),
+            new Vector3(5.9f, 1.165417f, -20.4f),
+            new Vector3(1.9f, 1.165417f, -13.6f)
+        };
+
         audienceMembers = new List<AudienceMember>();
         for (int i = 0; i < attendenceCount; i++)
         {
@@ -25,6 +33,14 @@ public class CrowdController : MonoBehaviour {
             {
                 float xRange = Mathf.Pow((500 - Mathf.Pow((zPos + 17), 2.0f)), 0.5f);
                 xPos = Mathf.Sign(Random.Range(-100.0f, 100.0f)) * Random.Range(0f, xRange);
+            }
+
+            foreach(Vector3 pos in SpawnPositions)
+            {
+                if (Vector3.Distance(new Vector3(xPos, 0, zPos), pos) < 3.0f)
+                {
+                    zPos -= 5;
+                }
             }
 
             member.transform.position = new Vector3(xPos, 0, zPos);
