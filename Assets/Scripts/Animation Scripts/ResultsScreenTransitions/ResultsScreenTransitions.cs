@@ -13,6 +13,7 @@ public class ResultsScreenTransitions : MonoBehaviour {
     public ScoreController scoreController;
     public ScoreChart scoreChart;
     public NameController nameController;
+    public HighScoreController highScoreController;
 
     public ScreenFader fader;
     public bool titleScreenSelected;
@@ -21,6 +22,7 @@ public class ResultsScreenTransitions : MonoBehaviour {
     void Start () {
         scoreController.SetScore(score);
         scoreChart.DisplayScores(accumulatedScores);
+        StartCoroutine(nameController.Display());
         StartCoroutine(fader.FadeIn());
     }
 
@@ -38,13 +40,18 @@ public class ResultsScreenTransitions : MonoBehaviour {
         string name = nameController.GetName();
         float score = ResultsScreenTransitions.score;
 
-        string filePath = Application.streamingAssetsPath + "/HighScores.txt";
-        string contents = File.ReadAllText(filePath);
-        contents += name + " " + score.ToString() + "\n";
-        File.WriteAllText(filePath, contents);
-        Debug.Log("wrote to log");
+        if(name != "")
+        {
+            string filePath = Application.streamingAssetsPath + "/HighScores.txt";
+            string contents = File.ReadAllText(filePath);
+            contents += name + " " + score.ToString() + "\n";
+            File.WriteAllText(filePath, contents);
+            Debug.Log("wrote to log");
+        }
 
         //Remove the submit button etc.
+        StartCoroutine(nameController.Dismiss());
+        StartCoroutine(highScoreController.Display());
     }
 
     void Update()
