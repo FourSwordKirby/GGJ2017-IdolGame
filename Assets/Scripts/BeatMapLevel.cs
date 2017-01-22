@@ -56,7 +56,7 @@ public class DummyLevel : BeatMapLevel
     
     public override AudioClip GetSong()
     {
-        clip = Resources.Load<AudioClip>("Audio/comet");
+        clip = Resources.Load<AudioClip>("Audio/comet_vocaloid");
         return clip;
     }
 
