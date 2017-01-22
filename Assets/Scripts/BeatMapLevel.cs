@@ -20,19 +20,19 @@ public class DummyLevel : BeatMapLevel
     private BeatMapEvent[] beatMap =
     {
         //new GestureBeatMapEvent(200f, Gesture.CrowdWave, 1),
-        //new GestureBeatMapEvent(5.6f, Gesture.LeftArmPumps, 1),
-        //new GestureBeatMapEvent(5.6f, Gesture.RightArmPumps, 1),
-        //new GestureBeatMapEvent(11.2f, Gesture.SlowWave, 1),
-        //new GestureBeatMapEvent(5.6f, Gesture.SimultaneousArmPumps, 1),
-        //new GestureBeatMapEvent(5.6f, Gesture.Clap, 1),
-        //new GestureBeatMapEvent(5.6f, Gesture.CrowdWave, 1),
-        //new GestureBeatMapEvent(5.6f, Gesture.Clap, 1),
-        //new PoseBeatMapEvent(3.0f, new List<Pose>(){Pose.KillerQueen}),
-        //new GestureBeatMapEvent(11.2f, Gesture.RightArmPumps, 1),
+        new GestureBeatMapEvent(5.6f, Gesture.LeftArmPumps, 1),
+        new GestureBeatMapEvent(5.6f, Gesture.RightArmPumps, 1),
+        new GestureBeatMapEvent(11.2f, Gesture.SlowWave, 1),
+        new GestureBeatMapEvent(5.6f, Gesture.SimultaneousArmPumps, 1),
+        new GestureBeatMapEvent(5.6f, Gesture.Clap, 1),
+        new GestureBeatMapEvent(5.6f, Gesture.CrowdWave, 1),
+        new GestureBeatMapEvent(5.6f, Gesture.Clap, 1),
+        new PoseBeatMapEvent(3.0f, new List<Pose>(){Pose.KillerQueen}),
+        new GestureBeatMapEvent(11.2f, Gesture.RightArmPumps, 1),
 
             
         //Testing game loop
-        new GestureBeatMapEvent(1.2f, Gesture.RightArmPumps, 1)
+        //new GestureBeatMapEvent(1.2f, Gesture.RightArmPumps, 1)
     };
 
     public override int GetTotalEvents()
@@ -53,7 +53,7 @@ public class DummyLevel : BeatMapLevel
 
     public override float GetDelayTillFirstEvent()
     {
-        return 1.0f;
-        //return 12.8f;
+        //return 1.0f;
+        return 12.8f;
     }
 }

@@ -25,7 +25,7 @@ public class ConcertManager : MonoBehaviour {
     public float score;
     public float multiplier;
     //TOOO DOOOOOO Fix the accumulated Scores
-    private List<float> accumulatedScores = new List<float>() { 0, 10, 20, 30 };
+    private List<float> accumulatedScores = new List<float>();
 
     public RewardUI reward;
 
@@ -37,6 +37,7 @@ public class ConcertManager : MonoBehaviour {
     public int cameraLevel;
 
     public CrowdController crowd;
+    public float secondCountdown;
 
     void Awake()
     {
@@ -64,6 +65,7 @@ public class ConcertManager : MonoBehaviour {
 
         crowd = GameObject.FindObjectOfType<CrowdController>();
         SetCrowd();
+        secondCountdown = 0.0f;
     }
 
     public void SetCameraLevel(int level, bool instant)
@@ -103,6 +105,13 @@ public class ConcertManager : MonoBehaviour {
         }
 
         float t = currentEventTime;
+
+        secondCountdown -= Time.deltaTime;
+        if(secondCountdown <= 0.0f)
+        {
+            secondCountdown = 1f;
+            accumulatedScores.Add(score);
+        }
 
         // Progress level based on time
         if (t > nextEventTime)

@@ -18,6 +18,14 @@ public class ScoreChart : MonoBehaviour {
     //Need to hack around this to make sure it works cleanly from the other scene
 	public void DisplayScores (List<float> scores) {
         this.scores = scores;
+        foreach(float s in scores)
+        {
+            if (s > scoreCeiling)
+            {
+                scoreCeiling = s;
+            }
+        }
+        scoreCeiling *= 1.05f;
 
         DrawPoints = new List<Vector2>() { Vector2.zero };
 
@@ -33,7 +41,7 @@ public class ScoreChart : MonoBehaviour {
 
     public IEnumerator PlotScore()
     {
-        float segmentDrawTime = 1.0f;
+        float segmentDrawTime = 0.1f;
         float timer = 0;
 
         for (int i = 0; i < DrawPoints.Count-1; i++)

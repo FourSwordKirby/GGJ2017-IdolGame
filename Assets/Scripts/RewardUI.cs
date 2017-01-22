@@ -31,7 +31,8 @@ public class RewardUI : MonoBehaviour {
     {
         Transform t = Camera.main.transform;
         GameObject g = Instantiate(Sugoi, t, false);
-        g.transform.position += g.transform.forward * 2.0f;
-        g.transform.position += g.transform.right * -1.0f;
+        g.transform.position += g.transform.forward * 0.4f;
+        g.transform.position += g.transform.right * -.2f;
+        g.transform.localScale = new Vector3(.2f, .2f, .2f);
     }
 }
