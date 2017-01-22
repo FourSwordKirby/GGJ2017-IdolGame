@@ -16,6 +16,7 @@ public enum Gesture
     SimultaneousArmPumps,
     SlowWave,
     CrowdWave,
+    Clap,
     Idle
 }
 
@@ -88,6 +89,7 @@ public class GestureBeatMapEvent : BeatMapEvent
             case Gesture.LeftArmPumps:
                 return 100;
             case Gesture.SimultaneousArmPumps:
+            case Gesture.Clap:
                 return 200;
             case Gesture.SlowWave:
                 return 500;

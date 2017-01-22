@@ -173,6 +173,23 @@ public class TwinStickControls : Controls{
                 || (motionDetected(leftWavePositions, leftPositions, 0.0f, 1.0f) && motionDetected(leftWavePositions, rightPositions, 0.0f, 1.0f)));
     }
 
+    public override bool CompletedClap()
+    {
+        List<Parameters.ControllerDirection> left = new List<Parameters.ControllerDirection>()
+        {
+            Parameters.ControllerDirection.W,
+            Parameters.ControllerDirection.E
+        };
+
+        List<Parameters.ControllerDirection> right = new List<Parameters.ControllerDirection>()
+        {
+            Parameters.ControllerDirection.E,
+            Parameters.ControllerDirection.W
+        };
+        return (motionDetected(left, leftPositions, .0f, 1.0f)
+            && motionDetected(right, rightPositions, .0f, 1.0f));
+    }
+
     //Motion is hold down on both sticks and then flick up
     override public bool CompletedCrowdWave()
     {

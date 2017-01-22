@@ -40,6 +40,12 @@ public class GestureChecker : MonoBehaviour {
             ConcertManager.instance.PerformGesture(Gesture.CrowdWave);
         }
 
+        if (twinStickControls.CompletedClap())
+        {
+            resetChecker();
+            ConcertManager.instance.PerformGesture(Gesture.Clap);
+        }
+
         if (twinStickControls.RetrievePose() == Pose.Neutral)
         {
             maintainedPose = Pose.Neutral;

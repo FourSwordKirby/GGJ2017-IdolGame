@@ -7,7 +7,7 @@ public abstract class Controls:MonoBehaviour {
 
     public abstract bool CompletedRightArmPumps();
     public abstract bool CompletedLeftArmPumps();
-    //public abstract bool CompletedSimultaneousArmPumps();
+    public abstract bool CompletedClap();
 
     public abstract bool CompletedSlowWave();
 
