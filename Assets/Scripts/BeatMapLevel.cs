@@ -43,7 +43,7 @@ public class DummyLevel : BeatMapLevel
     
     public override AudioClip GetSong()
     {
-        clip = Resources.Load<AudioClip>("Audio/Melt");
+        clip = Resources.Load<AudioClip>("Audio/MeltAlt");
         return clip;
     }
 
