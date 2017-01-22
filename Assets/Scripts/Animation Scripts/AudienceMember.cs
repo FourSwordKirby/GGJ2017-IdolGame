@@ -8,6 +8,17 @@ public class AudienceMember : MonoBehaviour {
     public GameObject leftArm;
     public GameObject rightArm;
 
+    public Color leftGlowstickColor;
+    public Color rightGlowstickColor;
+    public float colorChangeTime;
+    public Color currentLeftGlowstickColor;
+    public Color currentRightGlowstickColor;
+    private float leftTimer;
+    private float rightTimer;
+
+    public SpriteRenderer leftGlowstick;
+    public SpriteRenderer rightGlowstick;
+
     public Animator AudienceAnimator;
     private float ArmRestingHeight = 4.2f;
     private float ArmPumpingHeight = 4.2f;
@@ -19,7 +30,29 @@ public class AudienceMember : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if(Input.GetKeyDown(KeyCode.Q))
+        //Make the glowsticks the desired color
+        if(leftGlowstick.color != leftGlowstickColor)
+        {
+            leftTimer += Time.deltaTime;
+            leftGlowstick.color = Color.Lerp(currentLeftGlowstickColor, leftGlowstickColor, leftTimer / colorChangeTime);
+            if(leftTimer > colorChangeTime)
+            {
+                currentLeftGlowstickColor = leftGlowstickColor;
+                leftTimer = 0;
+            }
+        }
+        if (rightGlowstick.color != rightGlowstickColor)
+        {
+            rightTimer += Time.deltaTime;
+            rightGlowstick.color = Color.Lerp(currentRightGlowstickColor, rightGlowstickColor, rightTimer / colorChangeTime);
+            if (rightTimer > colorChangeTime)
+            {
+                currentRightGlowstickColor = rightGlowstickColor;
+                rightTimer = 0;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             PerformGesture(Gesture.Idle);
         }

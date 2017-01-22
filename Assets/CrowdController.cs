@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CrowdController : MonoBehaviour {
 
+    public GameObject audienceMemberPrefab;
+
 	// Use this for initialization
 	void Start () {
 		
