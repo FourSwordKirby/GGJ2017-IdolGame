@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 56ef4202921c70e4fa5033665175b81a
-timeCreated: 1485068920
+guid: 8a77be688a767384ab20010c3919dde6
+timeCreated: 1485089767
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Sparkles_0
-    21300002: Sparkles_1
+    21300000: Menu Screen Small Hearts_0
+    21300002: Menu Screen Small Hearts_1
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -80,26 +80,26 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sparkles_0
+      name: Menu Screen Small Hearts_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 369
-        height: 374
+        x: 349
+        y: 256
+        width: 114
+        height: 97
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sparkles_1
+      name: Menu Screen Small Hearts_1
       rect:
         serializedVersion: 2
-        x: 457
+        x: 0
         y: 0
-        width: 369
-        height: 375
+        width: 114
+        height: 97
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

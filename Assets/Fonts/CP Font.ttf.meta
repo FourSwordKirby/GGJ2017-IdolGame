@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: df5c287ec9f1bc14c8d4df6423681d53
+timeCreated: 1485089475
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: CP Font
+  fontNames:
+  - CP Font
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

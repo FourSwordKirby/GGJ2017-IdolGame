@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ConcertManager : MonoBehaviour {
     // UI Graphic to display for each gesture.
@@ -23,8 +24,12 @@ public class ConcertManager : MonoBehaviour {
     public float songTime = 0.0f;
     public float score;
     public float multiplier;
+    //TOOO DOOOOOO Fix the accumulated Scores
+    private List<float> accumulatedScores = new List<float>();
 
     public RewardUI reward;
+
+    public ScreenFader screenFader;
 
     public GameObject CameraPositions;
     public Transform targetCameraTransform;
@@ -32,6 +37,7 @@ public class ConcertManager : MonoBehaviour {
     public int cameraLevel;
 
     public CrowdController crowd;
+    public float secondCountdown;
 
     void Awake()
     {
@@ -47,6 +53,8 @@ public class ConcertManager : MonoBehaviour {
     {
         instance = this;
 
+        screenFader.FadeIn();
+
         AudioSource audio = Camera.main.GetComponent<AudioSource>();
         audio.clip = currentLevel.GetSong();
         audio.PlayDelayed(DELAY_TILL_SONG_START);
@@ -57,6 +65,7 @@ public class ConcertManager : MonoBehaviour {
 
         crowd = GameObject.FindObjectOfType<CrowdController>();
         SetCrowd();
+        secondCountdown = 0.0f;
     }
 
     public void SetCameraLevel(int level, bool instant)
@@ -97,6 +106,13 @@ public class ConcertManager : MonoBehaviour {
 
         float t = currentEventTime;
 
+        secondCountdown -= Time.deltaTime;
+        if(secondCountdown <= 0.0f)
+        {
+            secondCountdown = 1f;
+            accumulatedScores.Add(score);
+        }
+
         // Progress level based on time
         if (t > nextEventTime)
         {
@@ -108,6 +124,8 @@ public class ConcertManager : MonoBehaviour {
                 currentEventTime = 0.0f;
                 nextEventTime = currentEvent.eventLength;
             }
+            else
+                StartCoroutine(FinishSong());
         }
 
     }
@@ -233,5 +251,21 @@ public class ConcertManager : MonoBehaviour {
         {
             crowd.Pump(true, true);
         }
+    }
+
+    IEnumerator FinishSong()
+    {
+        StartCoroutine(screenFader.FadeOut());
+
+        yield return new WaitForSeconds(0.5f);
+        while (screenFader.fading)
+        {
+            yield return new WaitForSeconds(0.01f);
+        }
+        SceneManager.LoadScene(2);
+        ResultsScreenTransitions.score = score;
+        ResultsScreenTransitions.accumulatedScores = accumulatedScores;//DO THIS
+
+        yield return null;
     }
 }
