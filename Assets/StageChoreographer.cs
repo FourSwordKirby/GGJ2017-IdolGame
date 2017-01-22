@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageChoreographer : MonoBehaviour {
+public class StageChoreographer : MonoBehaviour
+{
 
     public GameObject spotlights;
     public GameObject pinwheels;
@@ -15,15 +16,30 @@ public class StageChoreographer : MonoBehaviour {
 
     public float timer;
 
-	// Update is called once per frame
-	void Update () {
+    float globalLightHigh;
+    float globalLightMed;
+    float globalLightLow;
+
+    float spotLightHigh;
+    float spotLightMed;
+    float spotLightLow;
+
+    // Update is called once per frame
+    void Update()
+    {
         float previousTime = timer;
         timer += Time.deltaTime;
-    if(previousTime == 0f)
+        if (previousTime == 0f)
         {
+            spotlights.SetActive(false);
+            pinwheels.SetActive(false);
+            hexagons.SetActive(false);
+            fire.SetActive(false);
+            fireworks.SetActive(false);
+
             fire.SetActive(true);
         }
-        else if(previousTime < 3.5f && timer >= 3.5f)
+        else if (previousTime < 3.5f && timer >= 3.5f)
         {
             spotlights.SetActive(true);
         }
@@ -54,7 +70,7 @@ public class StageChoreographer : MonoBehaviour {
             fireworks.SetActive(false);
             //globalLight.intensity = 0.05f;
             fire.SetActive(false);
-            
+
 
         }
         else if (previousTime < 28f && timer >= 28f)
@@ -151,6 +167,7 @@ public class StageChoreographer : MonoBehaviour {
             pinwheels.SetActive(false);
             fire.SetActive(false);
             fireworks.SetActive(false);
+            changeGlobalIntensity(globalLight.intensity, 0.05f);
             //globalLight.intensity = 0.05f;
             //spotLight.intensity = 0.05f;
         }
@@ -160,8 +177,33 @@ public class StageChoreographer : MonoBehaviour {
         }
         else if (previousTime < 105f && timer >= 105f)
         {
-            fireworks.SetActive(false);   
+            fireworks.SetActive(false);
         }
+    }
 
+    IEnumerator changeGlobalIntensity(float oldIntensity, float newIntensity)
+    {
+        float timer = 0.0f;
+        float lerpTime = 1.0f;
+
+        while (timer < lerpTime)
+        {
+            globalLight.intensity = Mathf.Lerp(oldIntensity, newIntensity, timer / lerpTime);
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return null;
+    }
+
+    IEnumerator changeSpotIntensity(float oldIntensity, float newIntensity)
+    {
+        float timer = 0.0f;
+        float lerpTime = 1.0f;
+
+        while (timer < lerpTime)
+        {
+            stageLight.intensity = Mathf.Lerp(oldIntensity, newIntensity, timer / lerpTime);
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return null;
     }
 }
