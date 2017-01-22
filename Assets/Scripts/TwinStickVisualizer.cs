@@ -30,13 +30,11 @@ public class TwinStickVisualizer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Rect leftRect = LeftPanel.rect;
-        Vector2 leftDir = TwinStickControls.getLeftDirection();
-        LStickIcon.anchoredPosition =
-            new Vector2(leftDir.x * leftRect.width / 2.0f, leftDir.y * leftRect.height / 2.0f);
+        Vector2 leftDir = TwinStickControls.getLeftDirection().normalized;
+        LStickIcon.anchoredPosition = leftDir * leftRect.width / 2.0f;
 
         Rect rightRect = RightPanel.rect;
-        Vector2 rightDir = TwinStickControls.getRightDirection();
-        RStickIcon.anchoredPosition =
-            new Vector2(rightDir.x * rightRect.width / 2.0f, rightDir.y * rightRect.height / 2.0f);
+        Vector2 rightDir = TwinStickControls.getRightDirection().normalized;
+        RStickIcon.anchoredPosition = rightDir * rightRect.width / 2.0f;
     }
 }
