@@ -79,9 +79,9 @@ public class ConcertScoreDisplay : MonoBehaviour
         {
             timer += Time.deltaTime;
             if (timer < flashTime)
-                ScoreDisplay.color = Color.Lerp(Color.white - Color.black, Color.white, timer / flashTime);
+                ScoreDisplay.color = Color.Lerp(Color.white, Color.white - Color.black, timer / flashTime);
             else
-                ScoreDisplay.color = Color.Lerp(Color.white, Color.black, (timer - flashTime) / (2 * flashTime));
+                ScoreDisplay.color = Color.Lerp(Color.white - Color.black, Color.white, (timer - flashTime) / (2 * flashTime));
             yield return new WaitForSeconds(0.01f);
         }
         yield return null;
