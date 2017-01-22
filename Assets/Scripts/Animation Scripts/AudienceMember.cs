@@ -89,8 +89,14 @@ public class AudienceMember : MonoBehaviour {
             PlayAnimation("AudienceRightArmPump");
         if (currentGesture == Gesture.SimultaneousArmPumps)
             PlayAnimation("AudienceBothArmPump");
+        if (currentGesture == Gesture.LeftWave)
+            PlayAnimation("AudienceLeftArmWave");
+        if (currentGesture == Gesture.RightWave)
+            PlayAnimation("AudienceRightArmWave");
         if (currentGesture == Gesture.SlowWave)
             PlayAnimation("AudienceBothArmWave");
+        if (currentGesture == Gesture.Clap)
+            PlayAnimation("AudienceClap");
         if (currentGesture == Gesture.CrowdWave)
             PlayAnimation("AudienceCrowdWave");
     }
