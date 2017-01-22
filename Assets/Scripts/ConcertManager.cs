@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ConcertManager : MonoBehaviour {
     // UI Graphic to display for each gesture.
@@ -23,8 +24,12 @@ public class ConcertManager : MonoBehaviour {
     public float songTime = 0.0f;
     public float score;
     public float multiplier;
+    //TOOO DOOOOOO Fix the accumulated Scores
+    private List<float> accumulatedScores = new List<float>() { 0, 10, 20, 30 };
 
     public RewardUI reward;
+
+    public ScreenFader screenFader;
 
     public GameObject CameraPositions;
     public Transform targetCameraTransform;
@@ -46,6 +51,8 @@ public class ConcertManager : MonoBehaviour {
     void Start()
     {
         instance = this;
+
+        screenFader.FadeIn();
 
         AudioSource audio = Camera.main.GetComponent<AudioSource>();
         audio.clip = currentLevel.GetSong();
@@ -108,6 +115,8 @@ public class ConcertManager : MonoBehaviour {
                 currentEventTime = 0.0f;
                 nextEventTime = currentEvent.eventLength;
             }
+            else
+                StartCoroutine(FinishSong());
         }
 
     }
@@ -233,5 +242,21 @@ public class ConcertManager : MonoBehaviour {
         {
             crowd.Pump(true, true);
         }
+    }
+
+    IEnumerator FinishSong()
+    {
+        StartCoroutine(screenFader.FadeOut());
+
+        yield return new WaitForSeconds(0.5f);
+        while (screenFader.fading)
+        {
+            yield return new WaitForSeconds(0.01f);
+        }
+        SceneManager.LoadScene(2);
+        ResultsScreenTransitions.score = score;
+        ResultsScreenTransitions.accumulatedScores = accumulatedScores;//DO THIS
+
+        yield return null;
     }
 }
