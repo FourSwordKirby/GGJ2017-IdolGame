@@ -88,8 +88,13 @@ public class TwinStickControls : Controls{
     //These implementations are kind of a first pass atm. This way of handling the input buffer isn't the best tbh
 
     //Motion is a single tap up on the right stick
-    override public bool CompletedArmPumps()
+    override public bool CompletedRightArmPumps()
     {
+        if (leftPositions[leftPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral)
+        {
+            return false;
+        }
+
         int lastIndex = rightPositions.Count - 1;
         int lastRaisedIndex = rightPositions.FindLastIndex(x => x.Key == Parameters.ControllerDirection.N);
 
@@ -99,6 +104,41 @@ public class TwinStickControls : Controls{
             float lastTime = rightPositions[lastIndex].Value;
             float lastRaisedTime = rightPositions.FindLast(x => x.Key == Parameters.ControllerDirection.N).Value;
             float lastLoweredTime = rightPositions.GetRange(0, lastRaisedIndex).FindLast(x => x.Key == Parameters.ControllerDirection.Neutral).Value;
+
+            //Debug.Log("raiseTime" + lastRaisedTime);
+            //Debug.Log("lowerTime" + lastLoweredTime);
+
+            if (lastRaisedTime <= lastLoweredTime)
+                return false;
+
+            if (lastTime - lastRaisedTime > 0.2f)
+                return false;
+
+            if (lastRaisedTime - lastLoweredTime > 0.2f)
+                return false;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    override public bool CompletedLeftArmPumps()
+    {
+        if (rightPositions[rightPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral)
+        {
+            return false;
+        }
+
+        int lastIndex = leftPositions.Count - 1;
+        int lastRaisedIndex = leftPositions.FindLastIndex(x => x.Key == Parameters.ControllerDirection.N);
+
+        //Debug.Log(lastIndex);
+        if (lastIndex > 0 && lastRaisedIndex > 0 && leftPositions[lastIndex].Key == Parameters.ControllerDirection.Neutral)
+        {
+            float lastTime = leftPositions[lastIndex].Value;
+            float lastRaisedTime = leftPositions.FindLast(x => x.Key == Parameters.ControllerDirection.N).Value;
+            float lastLoweredTime = leftPositions.GetRange(0, lastRaisedIndex).FindLast(x => x.Key == Parameters.ControllerDirection.Neutral).Value;
 
             //Debug.Log("raiseTime" + lastRaisedTime);
             //Debug.Log("lowerTime" + lastLoweredTime);
@@ -136,10 +176,16 @@ public class TwinStickControls : Controls{
     //Motion is hold down on both sticks and then flick up
     override public bool CompletedCrowdWave()
     {
-        List<Parameters.ControllerDirection> crowdWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.S,
-                                                                                       Parameters.ControllerDirection.N };
+        List<Parameters.ControllerDirection> crowdWavePositions = new List<Parameters.ControllerDirection>() {
+            Parameters.ControllerDirection.S,
+            Parameters.ControllerDirection.S,
+            Parameters.ControllerDirection.S,
+            Parameters.ControllerDirection.S,
+            Parameters.ControllerDirection.S,
+            Parameters.ControllerDirection.S,
+            Parameters.ControllerDirection.N };
 
-        return (motionDetected(crowdWavePositions, leftPositions, .3f, 5.0f) && motionDetected(crowdWavePositions, rightPositions, .3f, 5.0f));
+        return (motionDetected(crowdWavePositions, leftPositions, .05f, 5.0f) && motionDetected(crowdWavePositions, rightPositions, .05f, 5.0f));
     }
 
 
@@ -159,14 +205,14 @@ public class TwinStickControls : Controls{
         if (lastIndex == -1)
             return false;
 
-        for (int i = 0; i < motion.Count - 1; i++)
+        for (int i = motion.Count - 1; i >= 1 ; i--)
         {
             Parameters.ControllerDirection position = motion[i];
             
             if (handPositions[lastIndex].Key != position)
                 return false;
 
-            int nextIndex = handPositions.GetRange(0, lastIndex).FindLastIndex(x => x.Key == motion[i + 1]);
+            int nextIndex = handPositions.GetRange(0, lastIndex).FindLastIndex(x => x.Key == motion[i - 1]);
 
             if (nextIndex == -1)
                 return false;

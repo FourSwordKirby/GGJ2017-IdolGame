@@ -14,7 +14,17 @@ public class GestureChecker : MonoBehaviour {
 	void Update () {
         //print("left" + TwinStickControls.getLeftDirection());
         //print("right" + TwinStickControls.getRightDirection());
-        if (twinStickControls.CompletedArmPumps() || Input.GetKeyDown(KeyCode.Z))
+        if (twinStickControls.CompletedLeftArmPumps() && twinStickControls.CompletedRightArmPumps())
+        {
+            resetChecker();
+            ConcertManager.instance.PerformGesture(Gesture.SimultaneousArmPumps);
+        }
+        else if (twinStickControls.CompletedLeftArmPumps())
+        {
+            resetChecker();
+            ConcertManager.instance.PerformGesture(Gesture.LeftArmPumps);
+        }
+        else if (twinStickControls.CompletedRightArmPumps() || Input.GetKeyDown(KeyCode.Z))
         {
             resetChecker();
             ConcertManager.instance.PerformGesture(Gesture.RightArmPumps);

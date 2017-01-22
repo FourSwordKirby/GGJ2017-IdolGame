@@ -11,12 +11,12 @@ public enum EventType
 
 public enum Gesture
 {
-    Idle,
-    LeftArmPumps,
     RightArmPumps,
+    LeftArmPumps,
     SimultaneousArmPumps,
     SlowWave,
-    CrowdWave
+    CrowdWave,
+    Idle
 }
 
 public enum Pose
@@ -85,7 +85,10 @@ public class GestureBeatMapEvent : BeatMapEvent
         switch(gesture)
         {
             case Gesture.RightArmPumps:
+            case Gesture.LeftArmPumps:
                 return 100;
+            case Gesture.SimultaneousArmPumps:
+                return 200;
             case Gesture.SlowWave:
                 return 500;
             case Gesture.CrowdWave:

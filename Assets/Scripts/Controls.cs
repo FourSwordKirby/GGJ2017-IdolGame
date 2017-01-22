@@ -5,7 +5,9 @@ public abstract class Controls:MonoBehaviour {
 
     public abstract void ClearBuffer();
 
-    public abstract bool CompletedArmPumps();
+    public abstract bool CompletedRightArmPumps();
+    public abstract bool CompletedLeftArmPumps();
+    //public abstract bool CompletedSimultaneousArmPumps();
 
     public abstract bool CompletedSlowWave();
 

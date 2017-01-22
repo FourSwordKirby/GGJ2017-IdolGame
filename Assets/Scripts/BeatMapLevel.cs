@@ -19,9 +19,10 @@ public class DummyLevel : BeatMapLevel
     // The Level
     private BeatMapEvent[] beatMap =
     {
-        new GestureBeatMapEvent(11.2f, Gesture.RightArmPumps, 1),
-        new GestureBeatMapEvent(11.2f, Gesture.SlowWave, 1),
+        new GestureBeatMapEvent(5.6f, Gesture.LeftArmPumps, 1),
         new GestureBeatMapEvent(5.6f, Gesture.RightArmPumps, 1),
+        new GestureBeatMapEvent(11.2f, Gesture.SlowWave, 1),
+        new GestureBeatMapEvent(5.6f, Gesture.SimultaneousArmPumps, 1),
         new GestureBeatMapEvent(5.6f, Gesture.SlowWave, 1),
         new GestureBeatMapEvent(5.6f, Gesture.CrowdWave, 1),
         new GestureBeatMapEvent(5.6f, Gesture.SlowWave, 1),
