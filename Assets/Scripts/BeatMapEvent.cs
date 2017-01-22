@@ -152,7 +152,7 @@ public class PoseBeatMapEvent : BeatMapEvent
 
     public float GetMultiplier()
     {
-        return 0.2f * loggedPoses;
+        return 0.5f * loggedPoses;
     }
 }
 
