@@ -58,9 +58,8 @@ public class AudienceMember : MonoBehaviour {
             crowdWaveDelay -= Time.deltaTime;
             if (crowdWaveDelay < 0)
                 PlayAnimation("AudienceCrowdWave");
-
-            //Bug where we can't transition to crowdwave from idle
-            if (AudienceAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+            
+            if (AudienceAnimator.GetCurrentAnimatorStateInfo(0).IsName("AudienceCrowdWave") && AudienceAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
                 PerformGesture(Gesture.Idle);
         }
 
