@@ -25,30 +25,47 @@ public class ScoreController : MonoBehaviour {
     public void Update()
     {
         ScoreDisplay.text = "Score: " + (int)score;
+        float prevScore = score;
         score = Mathf.Lerp(score, targetScore, Time.deltaTime);
 
         if (targetScore - score < 1 && !exploded)
         {
             exploded = true;
-            StartCoroutine(Explode());
-            StartCoroutine(Explode2());
+            StartCoroutine(Explode(10));
+            StartCoroutine(Explode2(25));
+            StartCoroutine(DisplayRank());
         }
 
-        if (score > 100)
-            RankDisplay.text = "<b>SSS</b>UGOI!!";
-        else if (score > 80)
-            RankDisplay.text = "<b>SS</b>UGOI!";
-        else if (score > 60)
-            RankDisplay.text = "<b>S</b>UGOI";
-        else if (score > 40)
-            RankDisplay.text = "<b>A</b>nime";
-        else if (score > 20)
-            RankDisplay.text = "<b>B</b>-b-baka";
+        if (score > 100 && prevScore <= 100)
+        {
+            StartCoroutine(Explode(2));
+            StartCoroutine(Explode2(10));
+        }
+        else if (score > 80 && prevScore <= 80)
+        {
+            StartCoroutine(Explode(2));
+            StartCoroutine(Explode2(10));
+        }
+        else if (score > 60 && prevScore <= 60)
+        {
+            StartCoroutine(Explode(2));
+            StartCoroutine(Explode2(10));
+        }
+        else if (score > 40 && prevScore <= 40)
+        {
+            StartCoroutine(Explode(2));
+            StartCoroutine(Explode2(10));
+        }
+        else if (score > 20 && prevScore <= 20)
+        {
+            StartCoroutine(Explode(2));
+            StartCoroutine(Explode2(10));
+        }
     }
 
-    private IEnumerator Explode()
+    private IEnumerator Explode(int intensity)
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < intensity; i++)
         {
             GameObject o = (GameObject)Instantiate(scoreExplode);
             o.GetComponent<Text>().text = "Score: " + (int)score;
@@ -61,12 +78,39 @@ public class ScoreController : MonoBehaviour {
         }
     }
 
-    private IEnumerator Explode2()
+    private IEnumerator Explode2(int intensity)
     {
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < intensity; i++)
         {
             Instantiate(explodeParticles, new Vector3(Random.Range(-20f, 20f), Random.Range(-20f, 20f), Random.Range(10f, 20f)), Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    private IEnumerator DisplayRank()
+    {
+        float flashTime = 0.1f;
+        if (score > 100)
+            RankDisplay.text = "<b>SSS</b>UGOI!!";
+        else if (score > 80)
+            RankDisplay.text = "<b>SS</b>UGOI!";
+        else if (score > 60)
+            RankDisplay.text = "<b>S</b>UGOI";
+        else if (score > 40)
+            RankDisplay.text = "<b>A</b>nime";
+        else if (score > 20)
+            RankDisplay.text = "<b>B</b>-b-baka";
+
+        float timer = 0.0f;
+        while (timer  < 3*flashTime)
+        {
+            timer += Time.deltaTime;
+            if(timer < flashTime)
+                RankDisplay.color = Color.Lerp(Color.white - Color.black, Color.white, timer / flashTime);
+            else 
+                RankDisplay.color = Color.Lerp(Color.white, Color.black, (timer-flashTime) / (2 * flashTime));
+            yield return new WaitForSeconds(0.01f);
+        }
+        yield return null;
     }
 }
