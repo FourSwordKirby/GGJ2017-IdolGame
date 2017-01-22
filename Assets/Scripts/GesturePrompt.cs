@@ -19,14 +19,23 @@ public class GesturePrompt : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Start ()
+    {
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        if(anim.GetInteger("Gesture") == value)
+        {
+            anim.SetInteger("Gesture", value);
+        }
         anim.SetInteger("Gesture", value);
-	}
+    }
+
+    public void Enter()
+    {
+        anim.SetTrigger("Enter");
+    }
 
     public void Die()
     {

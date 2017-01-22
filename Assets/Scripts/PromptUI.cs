@@ -15,8 +15,14 @@ public class PromptUI : MonoBehaviour {
 
     private Text timePanel;
 
+    public BeatMapEvent currentEvent;
+    public GesturePrompt gesturePrompt;
+    public RectTransform currentTransform;
+
 	// Use this for initialization
 	void Start () {
+        currentEvent = null;
+
         if (!manager)
         {
             manager = GameObject.FindObjectOfType<ConcertManager>();
@@ -50,14 +56,24 @@ public class PromptUI : MonoBehaviour {
             return;
         }
 
-		if (currentPrompt != manager.GetPromptDisplay())
+		if (currentEvent != manager.currentEvent)
         {
+            currentEvent = manager.currentEvent;
             Debug.Log("Prompt change.");
-            SpawnPrompt(manager.GetPromptDisplay());
+            if(currentEvent is GestureBeatMapEvent)
+            {
+                GestureBeatMapEvent gbme = currentEvent as GestureBeatMapEvent;
+                SpawnPrompt(gesturePrompt.GetComponent<RectTransform>(), (int)gbme.gesture);
+            }
+            else
+            {
+                SpawnPrompt(manager.GetPromptDisplay());
+            }
         }
-	}
+        
+    }
 
-    private void SpawnPrompt(RectTransform prompt)
+    private void SpawnPrompt(RectTransform prompt, int gesture = -1)
     {
         if (promptPanel.childCount != 0)
         {
@@ -80,9 +96,12 @@ public class PromptUI : MonoBehaviour {
         }
 
         currentPrompt = prompt;
-        RectTransform t = Instantiate(currentPrompt, promptPanel) as RectTransform;
-
-        t.offsetMax = new Vector2(0.0f, 0.0f);
-        t.offsetMin = new Vector2(0.0f, 0.0f);
+        RectTransform t = Instantiate(currentPrompt) as RectTransform;
+        t.SetParent(promptPanel, false);
+        
+        if(gesture > -1)
+        {
+            t.GetComponent<GesturePrompt>().SetGesture((Gesture)gesture);
+        }
     }
 }

@@ -15,7 +15,7 @@ public class ConcertManager : MonoBehaviour {
     private int eventIndex;
     private float nextEventTime;
     public float currentEventTime;
-    private BeatMapEvent currentEvent;
+    public BeatMapEvent currentEvent;
 
     private float DELAY_TILL_SONG_START = 1.0f;
     private int MAX_LEVEL = 4;
