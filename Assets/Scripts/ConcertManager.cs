@@ -53,7 +53,8 @@ public class ConcertManager : MonoBehaviour {
     {
         instance = this;
 
-        screenFader.FadeIn();
+        if(screenFader)
+            screenFader.FadeIn();
 
         AudioSource audio = Camera.main.GetComponent<AudioSource>();
         audio.clip = currentLevel.GetSong();

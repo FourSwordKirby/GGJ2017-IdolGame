@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0ea00a0a0d063ce4b94832b298ea2d08
+timeCreated: 1485094789
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Cheeky Rabbit
+  fontNames:
+  - Cheeky Rabbit
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
