@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class StartScreenTransitions : MonoBehaviour {
+
+    public StartMenuController startMenuController;
+    public HighScoreController highScoreController;
 
     public ScreenFader fader;
     public bool gameStarted;
@@ -20,6 +25,18 @@ public class StartScreenTransitions : MonoBehaviour {
             StartCoroutine(fader.FadeOut());
             gameStarted = true;
         }
+    }
+
+    public void DisplayHighScores()
+    {
+        StartCoroutine(startMenuController.Dismiss());
+        StartCoroutine(highScoreController.Display());
+    }
+
+    public void HideHighScores()
+    {
+        StartCoroutine(startMenuController.Display());
+        StartCoroutine(highScoreController.Dismiss());
     }
 
     void Update()
