@@ -13,7 +13,7 @@ public class ConcertScoreDisplay : MonoBehaviour
     public GameObject explodeParticles;
 
     float score;
-    float multiplier;
+    float multiplier = 1.0f;
     float targetScore;
 
     //Call these 2 functions in the concert manager for dank special effects
