@@ -20,13 +20,14 @@ public class AudienceMember : MonoBehaviour {
     public SpriteRenderer rightGlowstick;
 
     public Animator AudienceAnimator;
-    private float ArmRestingHeight = 4.2f;
-    private float ArmPumpingHeight = 4.2f;
-    private float ArmSlowWaveHeight = 3.5f;
 
-    private float ArmCrowdWaveScale = 0.75f;
+    public float crowdWaveDelay;
+    //private bool InTransition;
+    //private float ArmRestingHeight = 4.2f;
+    //private float ArmPumpingHeight = 4.2f;
+    //private float ArmSlowWaveHeight = 3.5f;
+    //private float ArmCrowdWaveScale = 0.75f;
 
-    private bool InTransition;
 
     // Update is called once per frame
     void Update () {
@@ -52,25 +53,13 @@ public class AudienceMember : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            PerformGesture(Gesture.Idle);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            PerformGesture(Gesture.RightArmPumps);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            PerformGesture(Gesture.SlowWave);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PerformGesture(Gesture.CrowdWave);
-        }
-
         if (currentGesture == Gesture.CrowdWave)
         {
+            crowdWaveDelay -= Time.deltaTime;
+            if (crowdWaveDelay < 0)
+                PlayAnimation("AudienceCrowdWave");
+
+            //Bug where we can't transition to crowdwave from idle
             if (AudienceAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
                 PerformGesture(Gesture.Idle);
         }
@@ -110,9 +99,8 @@ public class AudienceMember : MonoBehaviour {
         //}
     }
 
-    void PerformGesture(Gesture g)
+    public void PerformGesture(Gesture g, bool crowdWaveRight = true)
     {
-        AudienceAnimator.enabled = false;
         currentGesture = g;
         if (currentGesture == Gesture.Idle)
             PlayAnimation("AudienceIdle");
@@ -131,13 +119,19 @@ public class AudienceMember : MonoBehaviour {
         if (currentGesture == Gesture.Clap)
             PlayAnimation("AudienceClap");
         if (currentGesture == Gesture.CrowdWave)
-            PlayAnimation("AudienceCrowdWave");
+        {
+            float crowdWaveLength = 2.0f; //This influences how long the wave lasts;
+            if (crowdWaveRight)
+                crowdWaveDelay = crowdWaveLength * (this.transform.position.x + 25)/50;
+            else
+                crowdWaveDelay = crowdWaveLength * -(this.transform.position.x - 25) / 50;
+        }
     }
 
     void PlayAnimation(string animName)
     {
-        InTransition = false;
-        AudienceAnimator.enabled = true;
+        //InTransition = false;
+        //AudienceAnimator.enabled = true;
         AudienceAnimator.Play(animName);
     }
 }
