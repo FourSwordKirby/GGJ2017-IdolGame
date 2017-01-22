@@ -183,6 +183,34 @@ public class TwinStickControls : Controls{
                 || (motionDetected(leftWavePositions, leftPositions, 1.0f) && motionDetected(leftWavePositions, rightPositions, 1.0f)));
     }
 
+    //Motion is a synchronized upper half-circles on both sticks
+    public bool CompletedLeftWave()
+    {
+        List<Parameters.ControllerDirection> rightWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.E,
+                                                                                       Parameters.ControllerDirection.N,
+                                                                                       Parameters.ControllerDirection.W };
+
+        List<Parameters.ControllerDirection> leftWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.W,
+                                                                                       Parameters.ControllerDirection.N,
+                                                                                       Parameters.ControllerDirection.E };
+
+        return (motionDetected(rightWavePositions, leftPositions, 1.0f) || motionDetected(leftWavePositions, leftPositions, 1.0f));
+    }
+
+    //Motion is a synchronized upper half-circles on both sticks
+    public bool CompletedRightWave()
+    {
+        List<Parameters.ControllerDirection> rightWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.E,
+                                                                                       Parameters.ControllerDirection.N,
+                                                                                       Parameters.ControllerDirection.W };
+
+        List<Parameters.ControllerDirection> leftWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.W,
+                                                                                       Parameters.ControllerDirection.N,
+                                                                                       Parameters.ControllerDirection.E };
+
+        return (motionDetected(rightWavePositions, rightPositions, 1.0f) || motionDetected(leftWavePositions, rightPositions, 1.0f));
+    }
+
     public override bool CompletedClap()
     {
         List<Parameters.ControllerDirection> left = new List<Parameters.ControllerDirection>()
@@ -227,6 +255,14 @@ public class TwinStickControls : Controls{
         if ((leftStickDir == Parameters.ControllerDirection.N && rightStickDir == Parameters.ControllerDirection.S)
             || (leftStickDir == Parameters.ControllerDirection.S && rightStickDir == Parameters.ControllerDirection.N))
             return Pose.KillerQueen;
+        if ((leftStickDir == Parameters.ControllerDirection.N && rightStickDir == Parameters.ControllerDirection.SE)
+           || (leftStickDir == Parameters.ControllerDirection.SW && rightStickDir == Parameters.ControllerDirection.N))
+            return Pose.PierceTheHeavens;
+        if ((leftStickDir == Parameters.ControllerDirection.NE && rightStickDir == Parameters.ControllerDirection.NW))
+            return Pose.Denial;
+        if ((leftStickDir == Parameters.ControllerDirection.SW && rightStickDir == Parameters.ControllerDirection.SE))
+            return Pose.Naruto;
+
         return Pose.Neutral;
     }
 

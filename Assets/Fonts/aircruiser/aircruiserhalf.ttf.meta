@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a72e3dc29da0c604295bf83c03360dbb
+timeCreated: 1485091655
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Halftone
+  fontNames:
+  - Aircruiser Halftone
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

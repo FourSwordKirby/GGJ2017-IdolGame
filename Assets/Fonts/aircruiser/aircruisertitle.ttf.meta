@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: b8c1ee74e95c0a04db6f1f7b6d26f85f
+timeCreated: 1485091656
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Title
+  fontNames:
+  - Aircruiser Title
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

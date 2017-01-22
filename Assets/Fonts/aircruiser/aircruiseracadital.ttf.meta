@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e547a1ed0b112bb42ab373f039064d3d
+timeCreated: 1485091656
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Academy Italic
+  fontNames:
+  - Aircruiser Academy Italic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

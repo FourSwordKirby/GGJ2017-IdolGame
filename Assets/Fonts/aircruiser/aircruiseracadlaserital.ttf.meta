@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 066c5d98323058c4dafbce0457f7fdaf
+timeCreated: 1485091654
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Academy Laser Italic
+  fontNames:
+  - Aircruiser Academy Laser Italic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

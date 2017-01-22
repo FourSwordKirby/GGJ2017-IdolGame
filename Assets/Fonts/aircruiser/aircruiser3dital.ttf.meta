@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: f8b07a5fe9891b349bc25cce75da7d48
+timeCreated: 1485091656
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser 3D Italic
+  fontNames:
+  - Aircruiser 3D Italic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

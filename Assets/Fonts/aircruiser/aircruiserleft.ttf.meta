@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 1c06b0766681f044db91b1cecde22800
+timeCreated: 1485091654
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Leftalic
+  fontNames:
+  - Aircruiser Leftalic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: ed96bfeb31e78db4aa92c840274d0a62
+timeCreated: 1485091656
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Bevel
+  fontNames:
+  - Aircruiser Bevel
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

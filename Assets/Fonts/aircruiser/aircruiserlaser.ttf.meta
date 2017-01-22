@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 5e718e5b440409f48b2be7bf2f1bb308
+timeCreated: 1485091655
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Laser
+  fontNames:
+  - Aircruiser Laser
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -8,18 +8,31 @@ public class ScoreController : MonoBehaviour {
     public Text ScoreDisplay;
     public Text RankDisplay;
 
+    public GameObject scoreExplode;
+    public GameObject explodeParticles;
 
     float score;
+    float targetScore;
+
+    bool exploded;
     
-    public void SetScore(float score)
+    public void SetScore(float s)
     {
-        this.score = score;
+        this.targetScore = s;
     }
 
     //This class used to display the score on the final results screen, do so here
     public void Update()
     {
-        ScoreDisplay.text = "Score: " + score;
+        ScoreDisplay.text = "Score: " + (int)score;
+        score = Mathf.Lerp(score, targetScore, Time.deltaTime);
+
+        if (targetScore - score < 1 && !exploded)
+        {
+            exploded = true;
+            StartCoroutine(Explode());
+            StartCoroutine(Explode2());
+        }
 
         if (score > 100)
             RankDisplay.text = "<b>SSS</b>UGOI!!";
@@ -31,5 +44,29 @@ public class ScoreController : MonoBehaviour {
             RankDisplay.text = "<b>A</b>nime";
         else if (score > 20)
             RankDisplay.text = "<b>B</b>-b-baka";
+    }
+
+    private IEnumerator Explode()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject o = (GameObject)Instantiate(scoreExplode);
+            o.GetComponent<Text>().text = "Score: " + (int)score;
+            o.transform.parent = transform;
+            RectTransform r = o.GetComponent<RectTransform>();
+            r.localPosition = scoreExplode.GetComponent<RectTransform>().localPosition;
+            o.SetActive(true);
+            Destroy(o, 2);
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    private IEnumerator Explode2()
+    {
+        for (int i = 0; i < 25; i++)
+        {
+            Instantiate(explodeParticles, new Vector3(Random.Range(-20f, 20f), Random.Range(-20f, 20f), Random.Range(10f, 20f)), Quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }

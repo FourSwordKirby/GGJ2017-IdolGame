@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: f1c8a24befae29f45a24e0c522dce19f
+timeCreated: 1485091656
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Super-Italic
+  fontNames:
+  - Aircruiser Super-Italic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0dcb3468f03d97a45b498b0d5862ba56
+timeCreated: 1485091654
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Chrome
+  fontNames:
+  - Aircruiser Chrome
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

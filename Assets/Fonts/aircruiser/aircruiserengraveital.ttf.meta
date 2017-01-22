@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 950178dca9888d947b6fcf9dffcb1c4d
+timeCreated: 1485091655
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Engraved Italic
+  fontNames:
+  - Aircruiser Engraved Italic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

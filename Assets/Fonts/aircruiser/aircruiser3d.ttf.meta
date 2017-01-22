@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 7616f9a7468a84b428d41bcc98afc323
+timeCreated: 1485091655
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser 3D
+  fontNames:
+  - Aircruiser 3D
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

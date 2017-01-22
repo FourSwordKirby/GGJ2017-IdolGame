@@ -28,7 +28,7 @@ public enum Pose
     KillerQueen, //(N+S)
     PierceTheHeavens, //(N+SE)
     Denial, //(NW+NWE)
-    JazzHands //(SW + SE)
+    Naruto //(SW + SE)
 }
 
 public abstract class BeatMapEvent

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 2543fef4fc8bb944b9e6226a1fca3470
+timeCreated: 1485091654
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aircruiser Light
+  fontNames:
+  - Aircruiser Light
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

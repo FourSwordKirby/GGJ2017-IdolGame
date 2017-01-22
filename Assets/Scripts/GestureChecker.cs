@@ -30,6 +30,16 @@ public class GestureChecker : MonoBehaviour {
             resetChecker();
             ConcertManager.instance.PerformGesture(Gesture.RightArmPumps);
         }
+        if (twinStickControls.CompletedLeftWave())
+        {
+            resetChecker();
+            ConcertManager.instance.PerformGesture(Gesture.LeftWave);
+        }
+        if (twinStickControls.CompletedRightWave())
+        {
+            resetChecker();
+            ConcertManager.instance.PerformGesture(Gesture.RightWave);
+        }
         if (twinStickControls.CompletedSlowWave() || Input.GetKeyDown(KeyCode.X))
         {
             resetChecker();
