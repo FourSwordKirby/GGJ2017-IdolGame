@@ -17,6 +17,7 @@ public class ConcertManager : MonoBehaviour {
     private BeatMapEvent currentEvent;
 
     private float DELAY_TILL_SONG_START = 1.0f;
+    private int MAX_LEVEL = 4;
 
     public float gameTime = 0.0f;
     public float songTime = 0.0f;
@@ -29,6 +30,8 @@ public class ConcertManager : MonoBehaviour {
     public Transform targetCameraTransform;
 
     public int cameraLevel;
+
+    public CrowdController crowd;
 
     void Awake()
     {
@@ -52,6 +55,8 @@ public class ConcertManager : MonoBehaviour {
 
         SetCameraLevel(0, true);
 
+        crowd = GameObject.FindObjectOfType<CrowdController>();
+        SetCrowd();
     }
 
     public void SetCameraLevel(int level, bool instant)
@@ -96,9 +101,13 @@ public class ConcertManager : MonoBehaviour {
         if (t > nextEventTime)
         {
             eventIndex++;
-            currentEvent = currentLevel.GetEventAtIndex(eventIndex);
-            currentEventTime = 0.0f;
-            nextEventTime = currentEvent.eventLength;
+            if (eventIndex < currentLevel.GetTotalEvents())
+            {
+                currentEvent = currentLevel.GetEventAtIndex(eventIndex);
+                SetCrowd();
+                currentEventTime = 0.0f;
+                nextEventTime = currentEvent.eventLength;
+            }
         }
 
     }
@@ -118,7 +127,7 @@ public class ConcertManager : MonoBehaviour {
             if(g == gestureEvent.gesture)
             {
                 //Special case if its a CrowdWave Gesture
-                if (gestureEvent.gesture == Gesture.CrowdWave)
+                if (false && gestureEvent.gesture == Gesture.CrowdWave)
                 {
                     if (currentEventTime > gestureEvent.eventLength * 0.4f && currentEventTime > gestureEvent.eventLength * 0.6f)
                         gestureEvent.LogGesture();
@@ -201,12 +210,28 @@ public class ConcertManager : MonoBehaviour {
 
     public void AdvancePlayer()
     {
+        if(cameraLevel >= MAX_LEVEL - 1)
+        {
+            return;
+        }
         cameraLevel++;
         SetCameraLevel(cameraLevel, false);
 
         if(reward)
         {
             reward.Advance();
+        }
+    }
+
+    public void SetCrowd()
+    {
+        if(currentEvent.GetEventType() == EventType.GESTURE_TYPE)
+        {
+            crowd.Do((currentEvent as GestureBeatMapEvent).gesture);
+        }
+        else
+        {
+            crowd.Pump(true, true);
         }
     }
 }

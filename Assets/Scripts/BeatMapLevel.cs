@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 public abstract class BeatMapLevel {
-    
+    public abstract int GetTotalEvents();
     public abstract BeatMapEvent GetEventAtIndex(int i);
     public abstract AudioClip GetSong();
     public abstract float GetDelayTillFirstEvent();
@@ -19,6 +19,7 @@ public class DummyLevel : BeatMapLevel
     // The Level
     private BeatMapEvent[] beatMap =
     {
+        new GestureBeatMapEvent(200f, Gesture.CrowdWave, 1),
         new GestureBeatMapEvent(5.6f, Gesture.LeftArmPumps, 1),
         new GestureBeatMapEvent(5.6f, Gesture.RightArmPumps, 1),
         new GestureBeatMapEvent(11.2f, Gesture.SlowWave, 1),
@@ -29,6 +30,11 @@ public class DummyLevel : BeatMapLevel
         new PoseBeatMapEvent(3.0f, new List<Pose>(){Pose.KillerQueen}),
         new GestureBeatMapEvent(11.2f, Gesture.RightArmPumps, 1),
     };
+
+    public override int GetTotalEvents()
+    {
+        return beatMap.Length;
+    }
 
     public override BeatMapEvent GetEventAtIndex(int i)
     {
@@ -43,7 +49,7 @@ public class DummyLevel : BeatMapLevel
 
     public override float GetDelayTillFirstEvent()
     {
-        //return 1.0f;
-        return 12.8f;
+        return 1.0f;
+        //return 12.8f;
     }
 }

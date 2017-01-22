@@ -90,6 +90,11 @@ public class TwinStickControls : Controls{
     //Motion is a single tap up on the right stick
     override public bool CompletedRightArmPumps()
     {
+        if(leftPositions.Count == 0 || rightPositions.Count == 0)
+        {
+            return false;
+        }
+
         if (leftPositions[leftPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral)
         {
             return false;
@@ -125,6 +130,11 @@ public class TwinStickControls : Controls{
 
     override public bool CompletedLeftArmPumps()
     {
+        if (leftPositions.Count == 0 || rightPositions.Count == 0)
+        {
+            return false;
+        }
+
         if (rightPositions[rightPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral)
         {
             return false;
@@ -169,8 +179,8 @@ public class TwinStickControls : Controls{
                                                                                        Parameters.ControllerDirection.N,
                                                                                        Parameters.ControllerDirection.E };
 
-        return ((motionDetected(rightWavePositions, leftPositions, 0.0f, 1.0f) && motionDetected(rightWavePositions, rightPositions, 0.0f, 1.0f))
-                || (motionDetected(leftWavePositions, leftPositions, 0.0f, 1.0f) && motionDetected(leftWavePositions, rightPositions, 0.0f, 1.0f)));
+        return ((motionDetected(rightWavePositions, leftPositions, 1.0f) && motionDetected(rightWavePositions, rightPositions, 1.0f))
+                || (motionDetected(leftWavePositions, leftPositions, 1.0f) && motionDetected(leftWavePositions, rightPositions, 1.0f)));
     }
 
     public override bool CompletedClap()
@@ -186,8 +196,8 @@ public class TwinStickControls : Controls{
             Parameters.ControllerDirection.E,
             Parameters.ControllerDirection.W
         };
-        return (motionDetected(left, leftPositions, .0f, 1.0f)
-            && motionDetected(right, rightPositions, .0f, 1.0f));
+        return (motionDetected(left, leftPositions, 1.0f)
+            && motionDetected(right, rightPositions, 1.0f));
     }
 
     //Motion is hold down on both sticks and then flick up
@@ -195,14 +205,18 @@ public class TwinStickControls : Controls{
     {
         List<Parameters.ControllerDirection> crowdWavePositions = new List<Parameters.ControllerDirection>() {
             Parameters.ControllerDirection.S,
-            Parameters.ControllerDirection.S,
-            Parameters.ControllerDirection.S,
-            Parameters.ControllerDirection.S,
-            Parameters.ControllerDirection.S,
-            Parameters.ControllerDirection.S,
             Parameters.ControllerDirection.N };
+        float[] holds = { 0.3f, 0.0f };
 
-        return (motionDetected(crowdWavePositions, leftPositions, .05f, 5.0f) && motionDetected(crowdWavePositions, rightPositions, .05f, 5.0f));
+        bool left = motionDetected(crowdWavePositions, leftPositions, 5.0f, holds);
+        bool right = motionDetected(crowdWavePositions, rightPositions, 5.0f, holds);
+
+        if (left || right)
+        {
+            Debug.Log("Results: " + left + " " + right);
+        }
+
+        return left && right;
     }
 
 
@@ -216,29 +230,70 @@ public class TwinStickControls : Controls{
         return Pose.Neutral;
     }
 
-    bool motionDetected(List<Parameters.ControllerDirection> motion, List<KeyValuePair<Parameters.ControllerDirection, float>> handPositions, float lowerBound, float upperBound)
+    bool motionDetected(List<Parameters.ControllerDirection> motion, List<KeyValuePair<Parameters.ControllerDirection, float>> handPositions, float upperBound, float[] holds = null)
     {
+        bool debugme = false;
         int lastIndex = handPositions.Count - 1;
         if (lastIndex == -1)
             return false;
 
-        for (int i = motion.Count - 1; i >= 1 ; i--)
+        for (int i = motion.Count - 1; i >= 0 ; i--)
         {
             Parameters.ControllerDirection position = motion[i];
             
             if (handPositions[lastIndex].Key != position)
+            {
                 return false;
+            }
 
-            int nextIndex = handPositions.GetRange(0, lastIndex).FindLastIndex(x => x.Key == motion[i - 1]);
+            if (holds != null && holds[i] > 0.0f)
+            {
+                float heldTime = 0.0f;
+                for(int j = lastIndex - 1; j >= 0; j--)
+                {
+                    if(handPositions[j].Key == position)
+                    {
+                        heldTime = handPositions[lastIndex].Value - handPositions[j].Value;
+                        if(heldTime > holds[i])
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                Debug.Log("" + i + " Held time for " + position + " was " + heldTime);
+                if(heldTime < holds[i])
+                {
+                    return false;
+                }
+                Debug.Log("after");
+                debugme = true;
+            }
 
-            if (nextIndex == -1)
-                return false;
+            if(i > 0)
+            {
+                int nextIndex = handPositions.GetRange(0, lastIndex).FindLastIndex(x => x.Key == motion[i - 1]);
 
-            float delay = handPositions[lastIndex].Value - handPositions[nextIndex].Value;
-            if (!(delay > lowerBound && delay < upperBound))
-                return false;
+                if (nextIndex == -1)
+                {
+                    return false;
+                }
 
-            lastIndex = nextIndex;
+                float delay = handPositions[lastIndex].Value - handPositions[nextIndex].Value;
+                if (delay >= upperBound)
+                {
+                    return false;
+                }
+
+                lastIndex = nextIndex;
+            }
+            if(debugme)
+            {
+                Debug.Log("After");
+            }
         }
         return true;
     }
