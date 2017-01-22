@@ -15,14 +15,20 @@ public enum Gesture
     LeftArmPumps,
     RightArmPumps,
     SimultaneousArmPumps,
+    LeftWave,
+    RightWave,
     SlowWave,
+    Clap,
     CrowdWave
 }
 
 public enum Pose
 {
     Neutral,
-    KillerQueen
+    KillerQueen, //(N+S)
+    PierceTheHeavens, //(N+SE)
+    Denial, //(NW+NWE)
+    JazzHands //(SW + SE)
 }
 
 public abstract class BeatMapEvent
