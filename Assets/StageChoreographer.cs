@@ -5,7 +5,7 @@ using UnityEngine;
 public class StageChoreographer : MonoBehaviour
 {
 
-    public GameObject spotlights;
+    public GameObject stageLights;
     public GameObject pinwheels;
     public GameObject hexagons;
     public GameObject fire;
@@ -16,13 +16,15 @@ public class StageChoreographer : MonoBehaviour
 
     public float timer;
 
-    float globalLightHigh;
-    float globalLightMed;
-    float globalLightLow;
+    float globalLightHigh = 0.5f;
+    float globalLightMed = 0.1f;
+    float globalLightLow = 0.05f;
+    float globalLightOff = 0f;
 
-    float spotLightHigh;
-    float spotLightMed;
-    float spotLightLow;
+    float stageLightHigh = 0.5f;
+    float stageLightMed = 0.1f;
+    float stageLightLow = 0.05f;
+    float stageLightOff = 0f;
 
     // Update is called once per frame
     void Update()
@@ -31,7 +33,7 @@ public class StageChoreographer : MonoBehaviour
         timer += Time.deltaTime;
         if (previousTime == 0f)
         {
-            spotlights.SetActive(false);
+            stageLights.SetActive(false);
             pinwheels.SetActive(false);
             hexagons.SetActive(false);
             fire.SetActive(false);
@@ -41,7 +43,7 @@ public class StageChoreographer : MonoBehaviour
         }
         else if (previousTime < 3.5f && timer >= 3.5f)
         {
-            spotlights.SetActive(true);
+            stageLights.SetActive(true);
         }
         else if (previousTime < 7f && timer >= 7f)
         {
@@ -51,11 +53,11 @@ public class StageChoreographer : MonoBehaviour
         else if (previousTime < 8f && timer >= 8f)
         {
             pinwheels.SetActive(false);
-            spotlights.SetActive(true);
+            stageLights.SetActive(true);
             hexagons.SetActive(true);
             fire.SetActive(true);
-            //globalLight.intensity = 0.1f;
-            //stageLight.intensity = 0.1f;
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightMed));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightMed));
         }
         else if (previousTime < 16f && timer >= 16f)
         {
@@ -66,11 +68,10 @@ public class StageChoreographer : MonoBehaviour
         else if (previousTime < 23f && timer >= 23f)
         {
             pinwheels.SetActive(false);
-            spotlights.SetActive(false);
+            stageLights.SetActive(false);
             fireworks.SetActive(false);
-            //globalLight.intensity = 0.05f;
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightLow));
             fire.SetActive(false);
-
 
         }
         else if (previousTime < 28f && timer >= 28f)
@@ -80,10 +81,10 @@ public class StageChoreographer : MonoBehaviour
         else if (previousTime < 30f && timer >= 30f)
         {
             fireworks.SetActive(false);
-            spotlights.SetActive(true);
+            stageLights.SetActive(true);
             hexagons.SetActive(false);
             fire.SetActive(true);
-            //globalLight.intensity = 0.5f;
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightHigh));
         }
         else if (previousTime < 35f && timer >= 35f)
         {
@@ -91,9 +92,9 @@ public class StageChoreographer : MonoBehaviour
         }
         else if (previousTime < 37f && timer >= 37f)
         {
-            //globalLight.intensity = 0.05f;
-            //spotLight.intensity = 0.05f;
-            spotlights.SetActive(false);
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightLow));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightLow));
+            stageLights.SetActive(false);
             hexagons.SetActive(true);
             fire.SetActive(false);
         }
@@ -108,11 +109,13 @@ public class StageChoreographer : MonoBehaviour
         else if (previousTime < 52f && timer >= 52f)
         {
             hexagons.SetActive(false);
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightOff));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightOff));
         }
         else if (previousTime < 54f && timer >= 54f)
         {
-            //globalLight.intensity = 0.1f;
-            //spotLight.intensity = 0.1f;
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightMed));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightHigh));
         }
         else if (previousTime < 59f && timer >= 59f)
         {
@@ -125,14 +128,16 @@ public class StageChoreographer : MonoBehaviour
         }
         else if (previousTime < 68f && timer >= 68f)
         {
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightOff));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightOff));
             fire.SetActive(false);
         }
         else if (previousTime < 70f && timer >= 70f)
         {
-            //globalLight.intensity = 0.05f;
-            //spotLight.intensity = 0.05f;
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightLow));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightLow));
             hexagons.SetActive(true);
-            spotlights.SetActive(true);
+            stageLights.SetActive(true);
         }
         else if (previousTime < 76f && timer >= 76f)
         {
@@ -142,7 +147,7 @@ public class StageChoreographer : MonoBehaviour
         {
             fireworks.SetActive(false);
             fire.SetActive(true);
-            //globalLight.intensity = 0.5f;
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightHigh));
         }
         else if (previousTime < 83f && timer >= 83f)
         {
@@ -152,7 +157,7 @@ public class StageChoreographer : MonoBehaviour
         }
         else if (previousTime < 85f && timer >= 85f)
         {
-            spotlights.SetActive(true);
+            stageLights.SetActive(true);
             hexagons.SetActive(true);
             fire.SetActive(true);
             fireworks.SetActive(true);
@@ -163,13 +168,12 @@ public class StageChoreographer : MonoBehaviour
         }
         else if (previousTime < 98f && timer >= 98f)
         {
-            spotlights.SetActive(false);
+            stageLights.SetActive(false);
             pinwheels.SetActive(false);
             fire.SetActive(false);
             fireworks.SetActive(false);
-            changeGlobalIntensity(globalLight.intensity, 0.05f);
-            //globalLight.intensity = 0.05f;
-            //spotLight.intensity = 0.05f;
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightLow));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightLow));
         }
         else if (previousTime < 103f && timer >= 103f)
         {
@@ -178,6 +182,8 @@ public class StageChoreographer : MonoBehaviour
         else if (previousTime < 105f && timer >= 105f)
         {
             fireworks.SetActive(false);
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightOff));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightOff));
         }
     }
 
