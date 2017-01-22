@@ -16,13 +16,13 @@ public class StageChoreographer : MonoBehaviour
 
     public float timer;
 
-    float globalLightHigh = 0.5f;
-    float globalLightMed = 0.1f;
+    float globalLightHigh = 0.1f;
+    float globalLightMed = 0.5f;
     float globalLightLow = 0.05f;
     float globalLightOff = 0f;
 
-    float stageLightHigh = 0.5f;
-    float stageLightMed = 0.1f;
+    float stageLightHigh = 0.1f;
+    float stageLightMed = 0.5f;
     float stageLightLow = 0.05f;
     float stageLightOff = 0f;
 
@@ -40,6 +40,9 @@ public class StageChoreographer : MonoBehaviour
             fireworks.SetActive(false);
 
             fire.SetActive(true);
+
+            StartCoroutine(changeGlobalIntensity(globalLight.intensity, globalLightLow));
+            StartCoroutine(changeSpotIntensity(stageLight.intensity, stageLightLow));
         }
         else if (previousTime < 3.5f && timer >= 3.5f)
         {
@@ -194,6 +197,7 @@ public class StageChoreographer : MonoBehaviour
 
         while (timer < lerpTime)
         {
+            timer += Time.deltaTime;
             globalLight.intensity = Mathf.Lerp(oldIntensity, newIntensity, timer / lerpTime);
             yield return new WaitForSeconds(0.02f);
         }
@@ -207,6 +211,7 @@ public class StageChoreographer : MonoBehaviour
 
         while (timer < lerpTime)
         {
+            timer += Time.deltaTime;
             stageLight.intensity = Mathf.Lerp(oldIntensity, newIntensity, timer / lerpTime);
             yield return new WaitForSeconds(0.02f);
         }
