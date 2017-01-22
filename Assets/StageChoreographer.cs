@@ -26,12 +26,17 @@ public class StageChoreographer : MonoBehaviour
     float stageLightLow = 0.05f;
     float stageLightOff = 0f;
 
+    private void Start()
+    {
+        timer = 0.0f;
+    }
+
     // Update is called once per frame
     void Update()
     {
         float previousTime = timer;
         timer += Time.deltaTime;
-        if (previousTime == 0f)
+        if (previousTime < 3.5f && timer < 3.5f)
         {
             stageLights.SetActive(false);
             pinwheels.SetActive(false);
