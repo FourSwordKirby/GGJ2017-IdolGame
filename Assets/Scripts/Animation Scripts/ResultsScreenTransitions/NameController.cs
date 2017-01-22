@@ -23,4 +23,17 @@ public class NameController : MonoBehaviour {
     {
         return inputField.text;
     }
+
+    public IEnumerator Display()
+    {
+        //CHANGE THIS LATER
+        yield return null;
+    }
+
+    public IEnumerator Dismiss()
+    {
+        //CHANGE THIS LATER
+        this.gameObject.SetActive(false);
+        yield return null;
+    }
 }
