@@ -47,11 +47,7 @@ public class ConcertManager : MonoBehaviour {
         currentEvent = currentLevel.GetEventAtIndex(eventIndex);
         currentEventTime = 0.0f;
         nextEventTime = currentEvent.eventLength;
-
-        for(int i = 0; i < GestureDisplays.Count; i++)
-        {
-            (GestureDisplays[i].GetComponent<GesturePrompt>()).SetGesture((Gesture)i);
-        }
+        
     }
 
     void Start()
