@@ -8,37 +8,58 @@ public class AudienceMember : MonoBehaviour {
     public GameObject leftArm;
     public GameObject rightArm;
 
+    public Color leftGlowstickColor;
+    public Color rightGlowstickColor;
+    public float colorChangeTime;
+    public Color currentLeftGlowstickColor;
+    public Color currentRightGlowstickColor;
+    private float leftTimer;
+    private float rightTimer;
+
+    public SpriteRenderer leftGlowstick;
+    public SpriteRenderer rightGlowstick;
+
     public Animator AudienceAnimator;
-    private float ArmRestingHeight = 4.2f;
-    private float ArmPumpingHeight = 4.2f;
-    private float ArmSlowWaveHeight = 3.5f;
 
-    private float ArmCrowdWaveScale = 0.75f;
+    public float crowdWaveDelay;
+    //private bool InTransition;
+    //private float ArmRestingHeight = 4.2f;
+    //private float ArmPumpingHeight = 4.2f;
+    //private float ArmSlowWaveHeight = 3.5f;
+    //private float ArmCrowdWaveScale = 0.75f;
 
-    private bool InTransition;
 
     // Update is called once per frame
     void Update () {
-        if(Input.GetKeyDown(KeyCode.Q))
+        //Make the glowsticks the desired color
+        if(leftGlowstick.color != leftGlowstickColor)
         {
-            PerformGesture(Gesture.Idle);
+            leftTimer += Time.deltaTime;
+            leftGlowstick.color = Color.Lerp(currentLeftGlowstickColor, leftGlowstickColor, leftTimer / colorChangeTime);
+            if(leftTimer > colorChangeTime)
+            {
+                currentLeftGlowstickColor = leftGlowstickColor;
+                leftTimer = 0;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (rightGlowstick.color != rightGlowstickColor)
         {
-            PerformGesture(Gesture.RightArmPumps);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            PerformGesture(Gesture.SlowWave);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PerformGesture(Gesture.CrowdWave);
+            rightTimer += Time.deltaTime;
+            rightGlowstick.color = Color.Lerp(currentRightGlowstickColor, rightGlowstickColor, rightTimer / colorChangeTime);
+            if (rightTimer > colorChangeTime)
+            {
+                currentRightGlowstickColor = rightGlowstickColor;
+                rightTimer = 0;
+            }
         }
 
         if (currentGesture == Gesture.CrowdWave)
         {
-            if (AudienceAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+            crowdWaveDelay -= Time.deltaTime;
+            if (crowdWaveDelay < 0)
+                PlayAnimation("AudienceCrowdWave");
+            
+            if (AudienceAnimator.GetCurrentAnimatorStateInfo(0).IsName("AudienceCrowdWave") && AudienceAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
                 PerformGesture(Gesture.Idle);
         }
 
@@ -77,9 +98,8 @@ public class AudienceMember : MonoBehaviour {
         //}
     }
 
-    void PerformGesture(Gesture g)
+    public void PerformGesture(Gesture g, bool crowdWaveRight = true)
     {
-        AudienceAnimator.enabled = false;
         currentGesture = g;
         if (currentGesture == Gesture.Idle)
             PlayAnimation("AudienceIdle");
@@ -98,13 +118,19 @@ public class AudienceMember : MonoBehaviour {
         if (currentGesture == Gesture.Clap)
             PlayAnimation("AudienceClap");
         if (currentGesture == Gesture.CrowdWave)
-            PlayAnimation("AudienceCrowdWave");
+        {
+            float crowdWaveLength = 2.0f; //This influences how long the wave lasts;
+            if (crowdWaveRight)
+                crowdWaveDelay = crowdWaveLength * (this.transform.position.x + 25)/50;
+            else
+                crowdWaveDelay = crowdWaveLength * -(this.transform.position.x - 25) / 50;
+        }
     }
 
     void PlayAnimation(string animName)
     {
-        InTransition = false;
-        AudienceAnimator.enabled = true;
+        //InTransition = false;
+        //AudienceAnimator.enabled = true;
         AudienceAnimator.Play(animName);
     }
 }
