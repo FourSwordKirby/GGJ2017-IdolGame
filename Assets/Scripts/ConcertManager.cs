@@ -84,11 +84,13 @@ public class ConcertManager : MonoBehaviour {
 
     void Update()
     {
+        /*CHEAT CODES
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("Q pressed.");
             AdvancePlayer();
         }
+        */
 
         Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetCameraTransform.position, .02f);
         Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetCameraTransform.rotation, .02f);
