@@ -148,15 +148,13 @@ public class ConcertManager : MonoBehaviour {
             if(g == gestureEvent.gesture)
             {
                 //Special case if its a CrowdWave Gesture
-                if (false && gestureEvent.gesture == Gesture.CrowdWave)
-                {
-                    if (currentEventTime > gestureEvent.eventLength * 0.4f && currentEventTime > gestureEvent.eventLength * 0.6f)
-                        gestureEvent.LogGesture();
-                }
-                else
-                {
-                    gestureEvent.LogGesture();
-                }
+                //if (false && gestureEvent.gesture == Gesture.CrowdWave)
+                //{
+                //    if (currentEventTime > gestureEvent.eventLength * 0.4f && currentEventTime > gestureEvent.eventLength * 0.6f)
+                //        gestureEvent.LogGesture();
+                //}
+                gestureEvent.LogGesture();
+                
 
                 //Add the score if the gesture is complete
                 if (gestureEvent.EventFullfilled())

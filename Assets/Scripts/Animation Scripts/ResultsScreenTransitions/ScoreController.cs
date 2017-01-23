@@ -40,27 +40,22 @@ public class ScoreController : MonoBehaviour {
             StartCoroutine(DisplayRank());
         }
 
-        if (score > 40000 && prevScore <= 40000)
+        if (score > 55000 && prevScore <= 55000)
         {
             StartCoroutine(Explode(2));
             StartCoroutine(Explode2(10));
         }
-        else if (score > 36000 && prevScore <= 36000)
+        else if (score > 50000 && prevScore <= 50000)
         {
             StartCoroutine(Explode(2));
             StartCoroutine(Explode2(10));
         }
-        else if (score > 25000 && prevScore <= 25000)
+        else if (score > 44000 && prevScore <= 44000)
         {
             StartCoroutine(Explode(2));
             StartCoroutine(Explode2(10));
         }
-        else if (score > 10000 && prevScore <= 10000)
-        {
-            StartCoroutine(Explode(2));
-            StartCoroutine(Explode2(10));
-        }
-        else if (score > 5000 && prevScore <= 5000)
+        else if (score > 35000 && prevScore <= 35000)
         {
             StartCoroutine(Explode(2));
             StartCoroutine(Explode2(10));
@@ -94,15 +89,15 @@ public class ScoreController : MonoBehaviour {
     private IEnumerator DisplayRank()
     {
         float flashTime = 0.1f;
-        if (score > 40000)
+        if (score > 55000)
             RankDisplay.text = "<size=100><b>SSS</b></size> UGOI!!";
-        else if (score > 36000)
+        else if (score > 50000)
             RankDisplay.text = "<size=100><b>SS</b></size> UGOI!";
-        else if (score > 25000)
+        else if (score > 44000)
             RankDisplay.text = "<size=100><b>S</b></size> UGOI";
-        else if (score > 10000)
-            RankDisplay.text = "<size=100><b>A</b></size>> nime";
-        else if (score > 5000)
+        else if (score > 35000)
+            RankDisplay.text = "<size=100><b>A</b></size> nime";
+        else 
             RankDisplay.text = "<size=100><b>B</b></size> -b-baka";
 
         float timer = 0.0f;

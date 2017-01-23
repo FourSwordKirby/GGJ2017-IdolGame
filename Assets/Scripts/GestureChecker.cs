@@ -14,7 +14,7 @@ public class GestureChecker : MonoBehaviour {
 	void Update () {
         //print("left" + TwinStickControls.getLeftDirection());
         //print("right" + TwinStickControls.getRightDirection());
-        if (twinStickControls.CompletedLeftArmPumps() && twinStickControls.CompletedRightArmPumps())
+        if (twinStickControls.CompletedBothArmPumps())
         {
             Debug.Log("SimulPump detected");
             resetChecker();

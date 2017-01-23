@@ -42,7 +42,6 @@ public class ConcertScoreDisplay : MonoBehaviour
     public void Update()
     {
         ScoreDisplay.text = (int)score + " <size=60>x</size>" + multiplier;
-        float prevScore = score;
         score = Mathf.Lerp(score, targetScore, Time.deltaTime);
     }
 

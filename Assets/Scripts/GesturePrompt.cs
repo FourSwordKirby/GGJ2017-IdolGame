@@ -45,7 +45,7 @@ public class GesturePrompt : MonoBehaviour {
 
     public IEnumerator ExplodeSelf()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(.49f);
         Destroy(this.gameObject);
         yield return null;
     }

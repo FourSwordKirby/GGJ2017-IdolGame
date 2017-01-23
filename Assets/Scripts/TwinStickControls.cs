@@ -90,42 +90,16 @@ public class TwinStickControls : Controls{
     //Motion is a single tap up on the right stick
     override public bool CompletedRightArmPumps()
     {
-        if(leftPositions.Count == 0 || rightPositions.Count == 0)
+        if (leftPositions.Count == 0 || rightPositions.Count == 0)
         {
             return false;
         }
 
-        if (leftPositions[leftPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral)
-        {
-            return false;
-        }
+        List<Parameters.ControllerDirection> upPositions =
+            new List<Parameters.ControllerDirection>() { Parameters.ControllerDirection.Neutral, Parameters.ControllerDirection.N };
 
-        int lastIndex = rightPositions.Count - 1;
-        int lastRaisedIndex = rightPositions.FindLastIndex(x => x.Key == Parameters.ControllerDirection.N);
-
-        //Debug.Log(lastIndex);
-        if (lastIndex > 0 && lastRaisedIndex > 0 && rightPositions[lastIndex].Key == Parameters.ControllerDirection.Neutral)
-        {
-            float lastTime = rightPositions[lastIndex].Value;
-            float lastRaisedTime = rightPositions.FindLast(x => x.Key == Parameters.ControllerDirection.N).Value;
-            float lastLoweredTime = rightPositions.GetRange(0, lastRaisedIndex).FindLast(x => x.Key == Parameters.ControllerDirection.Neutral).Value;
-
-            //Debug.Log("raiseTime" + lastRaisedTime);
-            //Debug.Log("lowerTime" + lastLoweredTime);
-
-            if (lastRaisedTime <= lastLoweredTime)
-                return false;
-
-            if (lastTime - lastRaisedTime > 0.2f)
-                return false;
-
-            if (lastRaisedTime - lastLoweredTime > 0.2f)
-                return false;
-
-            return true;
-        }
-
-        return false;
+        return leftPositions[leftPositions.Count - 1].Key == Parameters.ControllerDirection.Neutral
+            && motionDetected(upPositions, rightPositions, 1.0f);
     }
 
     override public bool CompletedLeftArmPumps()
@@ -135,37 +109,20 @@ public class TwinStickControls : Controls{
             return false;
         }
 
-        if (rightPositions[rightPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral)
-        {
-            return false;
-        }
+        List<Parameters.ControllerDirection> upPositions =
+            new List<Parameters.ControllerDirection>() { Parameters.ControllerDirection.Neutral, Parameters.ControllerDirection.N };
 
-        int lastIndex = leftPositions.Count - 1;
-        int lastRaisedIndex = leftPositions.FindLastIndex(x => x.Key == Parameters.ControllerDirection.N);
+        return rightPositions[rightPositions.Count - 1].Key == Parameters.ControllerDirection.Neutral
+            && motionDetected(upPositions, leftPositions, 1.0f);
+    }
 
-        //Debug.Log(lastIndex);
-        if (lastIndex > 0 && lastRaisedIndex > 0 && leftPositions[lastIndex].Key == Parameters.ControllerDirection.Neutral)
-        {
-            float lastTime = leftPositions[lastIndex].Value;
-            float lastRaisedTime = leftPositions.FindLast(x => x.Key == Parameters.ControllerDirection.N).Value;
-            float lastLoweredTime = leftPositions.GetRange(0, lastRaisedIndex).FindLast(x => x.Key == Parameters.ControllerDirection.Neutral).Value;
+    public bool CompletedBothArmPumps()
+    {
+        List<Parameters.ControllerDirection> upPositions =
+            new List<Parameters.ControllerDirection>() { Parameters.ControllerDirection.Neutral, Parameters.ControllerDirection.N };
 
-            //Debug.Log("raiseTime" + lastRaisedTime);
-            //Debug.Log("lowerTime" + lastLoweredTime);
-
-            if (lastRaisedTime <= lastLoweredTime)
-                return false;
-
-            if (lastTime - lastRaisedTime > 0.2f)
-                return false;
-
-            if (lastRaisedTime - lastLoweredTime > 0.2f)
-                return false;
-
-            return true;
-        }
-
-        return false;
+        return motionDetected(upPositions, rightPositions, 1.0f)
+            && motionDetected(upPositions, leftPositions, 1.0f);
     }
 
     //Motion is a synchronized upper half-circles on both sticks
@@ -186,6 +143,10 @@ public class TwinStickControls : Controls{
     //Motion is a synchronized upper half-circles on both sticks
     public bool CompletedLeftWave()
     {
+        if (leftPositions.Count == 0 || rightPositions.Count == 0)
+        {
+            return false;
+        }
         List<Parameters.ControllerDirection> rightWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.NE,
                                                                                        Parameters.ControllerDirection.N,
                                                                                        Parameters.ControllerDirection.NW };
@@ -193,7 +154,7 @@ public class TwinStickControls : Controls{
         List<Parameters.ControllerDirection> leftWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.NW,
                                                                                        Parameters.ControllerDirection.N,
                                                                                        Parameters.ControllerDirection.NE };
-        if (rightPositions[rightPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral) ;
+        if (rightPositions[rightPositions.Count - 1].Key != Parameters.ControllerDirection.Neutral)
             return false;
 
         return (motionDetected(rightWavePositions, leftPositions, 1.0f) || motionDetected(leftWavePositions, leftPositions, 1.0f));
@@ -202,6 +163,10 @@ public class TwinStickControls : Controls{
     //Motion is a synchronized upper half-circles on both sticks
     public bool CompletedRightWave()
     {
+        if (leftPositions.Count == 0 || rightPositions.Count == 0)
+        {
+            return false;
+        }
         List<Parameters.ControllerDirection> rightWavePositions = new List<Parameters.ControllerDirection>() {Parameters.ControllerDirection.NE,
                                                                                        Parameters.ControllerDirection.N,
                                                                                        Parameters.ControllerDirection.NW };
@@ -290,7 +255,6 @@ public class TwinStickControls : Controls{
 
     bool motionDetected(List<Parameters.ControllerDirection> motion, List<KeyValuePair<Parameters.ControllerDirection, float>> handPositions, float upperBound, float[] holds = null)
     {
-        bool debugme = false;
         int lastIndex = handPositions.Count - 1;
         if (lastIndex == -1)
             return false;
@@ -322,13 +286,10 @@ public class TwinStickControls : Controls{
                         break;
                     }
                 }
-                Debug.Log("" + i + " Held time for " + position + " was " + heldTime);
                 if(heldTime < holds[i])
                 {
                     return false;
                 }
-                Debug.Log("after");
-                debugme = true;
             }
 
             if(i > 0)
@@ -347,10 +308,6 @@ public class TwinStickControls : Controls{
                 }
 
                 lastIndex = nextIndex;
-            }
-            if(debugme)
-            {
-                Debug.Log("After");
             }
         }
         return true;
